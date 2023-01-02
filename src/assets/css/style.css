@@ -21,7 +21,10 @@
 body{
     background-color: #ffffff;
     -webkit-tap-highlight-color: transparent;
+    font-family: jost-regular;
 }
+
+/* ****************** Top Bar Design ************************/
 .top-nav{
     display: flex;
     justify-content: space-between;
@@ -62,4 +65,365 @@ margin-bottom: -3px;
     width: 97%;
     text-align: center;
     margin-left: 16px;
+}
+/**************************** Header Navbar Design******************************* */
+.header{
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);;
+}
+.navbar{
+    width: 30%;
+    padding-left: 5%;
+}
+.navbar-nav ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar-nav ul li{
+    list-style: none;   
+}
+.navbar-nav ul li:hover a img {
+    transform: rotateX(180deg);
+}
+/* .navbar-nav ul li>a:after {
+    content: url(../Img/down-arrow.png);
+    position: absolute;
+    font-size: 10px;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+     width: 10px; 
+    height: 20px;
+} */
+.navbar-nav ul li a{
+    text-decoration: none;
+    color: #303030;
+    font-family: jost-medium;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-nav ul li a img{
+    width :16px;
+}
+a.logo {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.logo img{
+    width: 150px;
+}
+.left{
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+}
+.left .left-inner{
+    width: 55%;
+}
+.left .left-inner ul {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+}
+.left .left-inner ul li {
+    list-style: none;
+}
+.left .left-inner ul li:hover a img {
+    transform: rotateX(180deg);
+    /* transition: all 1s ease-out; */
+}
+.left .left-inner ul li a{
+    text-decoration: none;
+    color: #303030;
+    font-size: 16px;
+    font-family: jost-medium;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.left .left-inner ul li a img{
+    width :16px;
+}
+.left .logins {
+    width: 30%;
+}
+.left .logins ul{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.left .logins ul li{
+    list-style: none;
+}
+.left .logins ul li a{
+    text-decoration: none;
+}
+.left .logins ul li a img{
+    width: 22px;
+}
+
+/* ************************** Product Page Design *********************************/
+.container-fluid.product-list-main {
+    background-color: #fff;
+    padding-top: 30px;
+    display: inline-block;
+}
+.product-list-main {
+    background-color: #fff;
+    padding-top: 30px;
+    display: inline-block;
+}
+.product-heading{
+    display: inline-block;
+}
+.product-width{
+    width: 100%;
+}
+.product-count{
+    display: inline-block;
+    padding-bottom: 20px;
+}
+.container-fluid {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.items {
+    text-align: center;
+}
+.product-list-main h1 {
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+    max-width: 400px;
+    color: #303030;
+    padding-left: 10px;
+    margin-top: 3px;
+    margin-bottom: 0;
+    text-transform: capitalize;
+    font-family: playfairdisplay-regular;
+    font-size: 2rem;
+    font-weight: 400;
+}
+.product-list-main p {
+    color: #303030;
+    padding-top: 0;
+    margin: 0;
+    text-transform: capitalize;
+    font-size: 14px;
+    font-family: jost-regular;
+}
+/* ***************************  Filter Top Design *************************/
+.filter-top{
+    display: flex;
+    flex-wrap: wrap;
+}
+.product-list-main .sidebar-filter {
+    min-width: auto!important;
+    padding-left: 20px!important;
+    margin-left: 0!important;
+    padding-right: 0;
+    flex-grow: 0!important;
+    width: 21%;
+    flex: 0 0 21%;
+}
+.product-list-main h3 {
+    font-weight: 500;
+    display: inline-block;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 16px;
+    max-width: 400px;
+    color: #000;
+    padding-left: 10px;
+    margin-top: 3px;
+    margin-bottom: 0;
+    text-transform: capitalize;
+}
+.product-list-main p {
+    color: #303030;
+    padding-top: 0;
+    margin: 0;
+    text-transform: capitalize;
+    font-size: 14px;
+}
+.product-list-main p span {
+    color: #303030;
+    padding-right: 3px;
+    font-size: 14px!important;
+}
+.hideFilterWrap {
+    display: flex;
+    border: 1px solid #ccc;
+    padding: 10px 15px!important;
+    cursor: pointer;
+    text-transform: uppercase !important;
+    font-family: jost-medium;
+}
+.hideFilterWrap img {
+    margin-right: 5px;
+}
+.product-list-main .product-filter-section {
+    width: 75%;
+    max-width: 75%;
+    flex: 0 0 75%;
+    padding-left: 0;
+    padding-right: 0;
+}
+.row-filter {
+    width: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    padding-bottom: 15px;
+    padding-top: 8px;
+    padding-right: 30px;
+    margin-right: 0;
+    display: flex;
+}
+.applied-filter {
+    width: 70%;
+}
+.product-sort {
+    margin-bottom: 0;
+    position: relative;
+    padding-right: 0;
+    margin-right: 0;
+    width: 30%;
+}
+.sort-product {
+    float: right;
+    padding: 8px 7px;
+    font-size: 14px;
+    color: #282c3f;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    max-width: 250px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    border: 1px solid #d3d3d3;
+}
+.sort-product strong {
+    display: flex;
+}
+.sort-product .new {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    float: right;
+}
+.new img{
+    width: 15px;
+}
+.sort-product:hover .new img{
+    transform: rotateX(180deg);
+}
+.inline-block{
+    display: inline-block;
+}
+.applied-filter li {
+    font-size: 13px;
+    display: inline-block;
+    padding: 8px 24px;
+    border-radius: 18px;
+    margin-right: 5px;
+    border: 1px solid #707070;
+    margin-bottom: 4px;
+}
+.applied-filter li>span {
+    text-transform: capitalize;
+    font-family: Jost-medium;
+
+}
+li .remove {
+    text-decoration: none;
+    color: #303030;
+    margin-left: 5px;
+    font-weight: lighter;
+}
+.product-main{
+    display: flex;
+
+}
+/* **********************Sidebar filter Design ***************************/
+.sidebar-filter{
+    width: 25%;
+}
+/* *********************** Product List Design *******************************/
+.product-page{
+    width: 75%;
+}
+.product-list-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 5%;
+}
+.width-product{
+    width: 23%;
+}
+ .product-box {
+    position: relative;
+    overflow: hidden;
+}
+a.wishlist {
+    z-index: 2;
+    position: absolute;
+    right: 5px;
+    font-size: 0;
+    display: block;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    border-radius: 30px;
+    opacity: 1;
+    color: #626262;
+    text-transform: uppercase;
+    text-decoration: none;
+    pointer-events: none;
+    padding-top: 7px;
+    transition: all .1s;
+    top: 5px;
+}
+.slide-box .product-name {
+    margin-top: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #0C0C0C;
+}
+.price {
+    margin: 5% 0%;
+}
+span.price {
+    font-size: 17px!important;
+    color: #4C0B36!important;
+    font-family: Jost-medium;
+}
+.sidebar-inner ul {
+    list-style: none;
+}
+li.filter-box {
+    font-size: 14px;
+}
+li.filter-box {
+    padding-top: 20px;
+    padding-bottom: 15px;
+    padding-left: 5px;
+    border-bottom: 1px solid #e9e9ed;
 }
