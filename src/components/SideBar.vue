@@ -1,14 +1,12 @@
 <template>
   <div class="sidebar-inner">
     <ul class="filter-component">
-    <li class="filter-box">
-      <a href="#" class="dropdown-toggle mobile-active">Gender</a>
-      <ul class="collapse list-unstyled mobile-active">
-        <li class="women">
-          <div>
-            <a href="#" value="Gender_Women" class="check" >Women
-              <span class="filter-count" style="display: none"> () </span></a>
-          </div>
+    <li class="filter-box" v-for="(item,index) in list.filters" :key="index">
+      <label :for=item.filter_lable>{{item.filter_lable}} </label>
+      <ul class="" v-for="(itemf, i) in item.options" :key="i">
+        <li class="women" >
+          <input type="checkbox">
+          <label :for=itemf.value_key :value=itemf.value>{{itemf.value}}</label>
         </li>
       </ul>
     </li>
@@ -18,5 +16,6 @@
 <script>
 export default {
   name: "Side-Bar",
+  props:['list'],
 };
 </script>

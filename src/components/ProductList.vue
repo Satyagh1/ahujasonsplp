@@ -1,81 +1,35 @@
 <template>
-  <div class="product-list-container">
-    <div class="width-product">
-      <div class="slide-box">
-        <div class="product-box">
-          <a href="#">
-            <div class="image-single">
-              <img src="../assets/Img/Rectangle.png" alt="" />
+          <div class="product-container">
+          <div
+            class="slide-box"
+            v-for="(item, index) in Products"
+            :key="index"
+          >
+            <div class="product-box">
+              <a :href="item.url_key">
+                <div class="image-single">
+                  <img :src="item.image" alt="" />
+                </div>
+              </a>
+              <a :href="item.url_key" class="wishlist"
+                ><img src="../assets/Img/Heart.svg" alt=""
+              /></a>
             </div>
-          </a>
-          <a href="#" class='wishlist'><img src="../assets/Img/Heart.svg" alt=""></a>
-        </div>
-        <div class="product-info">
-            <p class="product-name">Women Pashmina Shawl</p>
-            <div class="price">
-                <p><span class="price">Rs.150,000</span></p>
+            <div class="product-info">
+              <p class="product-name">{{ item.name }}</p>
+              <div class="price">
+                <p>
+                  <span class="price">Rs.{{ item.selling_price }}</span>
+                </p>
+              </div>
             </div>
+          </div>
+         <div v-if="Products.length" v-observe-visibility="handleScroll"></div>
         </div>
-      </div>
-    </div>
-    <div class="width-product">
-      <div class="slide-box">
-        <div class="product-box">
-          <a href="#">
-            <div class="image-single">
-              <img src="../assets/Img/Rectangle.png" alt="" />
-            </div>
-          </a>
-          <a href="#" class='wishlist'><img src="../assets/Img/Heart.svg" alt=""></a>
-        </div>
-        <div class="product-info">
-            <p class="product-name">Women Pashmina Shawl</p>
-            <div class="price">
-                <p><span class="price">Rs.150,000</span></p>
-            </div>
-        </div>
-      </div>
-    </div>
-    <div class="width-product">
-      <div class="slide-box">
-        <div class="product-box">
-          <a href="#">
-            <div class="image-single">
-              <img src="../assets/Img/Rectangle.png" alt="" />
-            </div>
-          </a>
-          <a href="#" class='wishlist'><img src="../assets/Img/Heart.svg" alt=""></a>
-        </div>
-        <div class="product-info">
-            <p class="product-name">Women Pashmina Shawl</p>
-            <div class="price">
-                <p><span class="price">Rs.150,000</span></p>
-            </div>
-        </div>
-      </div>
-    </div>
-    <div class="width-product">
-      <div class="slide-box">
-        <div class="product-box">
-          <a href="#">
-            <div class="image-single">
-              <img src="../assets/Img/Rectangle.png" alt="" />
-            </div>
-          </a>
-          <a href="#" class='wishlist'><img src="../assets/Img/Heart.svg" alt=""></a>
-        </div>
-        <div class="product-info">
-            <p class="product-name">Women Pashmina Shawl</p>
-            <div class="price">
-                <p><span class="price">Rs.150,000</span></p>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 <script>
 export default {
   name: "Product-List",
+props:['Products','handleScroll'],
 };
 </script>

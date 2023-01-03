@@ -360,21 +360,18 @@ li .remove {
     display: flex;
 
 }
-/* **********************Sidebar filter Design ***************************/
-.sidebar-filter{
-    width: 25%;
-}
 /* *********************** Product List Design *******************************/
 .product-page{
     width: 75%;
 }
-.product-list-container{
+.product-container{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
+    row-gap: 18px;
     align-items: center;
-    margin-bottom: 5%;
 }
-.width-product{
+.slide-box {
     width: 23%;
 }
  .product-box {
@@ -418,6 +415,14 @@ span.price {
 .sidebar-inner ul {
     list-style: none;
 }
+/* **********************Sidebar filter Design ***************************/
+.sidebar-filter{
+    width: 25%;
+}
+input[type="checkbox"]#checkbox1:checked + span {
+    border-color: red;
+  background-color:red;
+}
 li.filter-box {
     font-size: 14px;
 }
@@ -426,4 +431,28 @@ li.filter-box {
     padding-bottom: 15px;
     padding-left: 5px;
     border-bottom: 1px solid #e9e9ed;
+}
+.filter-box label .hide{
+    display: none
+}
+.filter-box label .show{
+    display: block;
+}
+.filter-box>label {
+    font-size: 1rem;
+    font-family: jost-semibold;
+    display: flex;
+    justify-content: space-between;
+}
+.filter-box>label span{
+    font-size: 16px;
+}
+li.women {
+    padding: 3% 0%;
+}
+li.women label{
+    font-family: 'jost-medium';
+    font-size: 14px;
+    font-weight: 200;
+    margin-left: 15px;
 }
