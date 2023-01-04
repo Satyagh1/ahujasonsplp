@@ -3,9 +3,8 @@
     <div class="container-fluid product-heading">
       <div class="product-width product-count">
         <div class="items">
-          <h1>{{response.name}}</h1>
-          <p class="item_count font-bold">{{response.count
-}}</p>
+          <h1>{{ response.name }}</h1>
+          <p class="item_count font-bold">{{ response.count }}</p>
         </div>
       </div>
     </div>
@@ -15,9 +14,13 @@
           <div>
             <div>
               <h3>
-                <p class="hideFilterWrap">
+                <p
+                  @click="showHideFilter"
+                  :isOpen="isOpen"
+                  class="hideFilterWrap"
+                >
                   <img src="../assets/Img/filter-icon.svg" alt="" />
-                  <span>hide </span>
+                  <span> {{ isOpen ? "show" : "hide" }}</span>
                   filter
                 </p>
               </h3>
@@ -27,9 +30,9 @@
         <div class="product-filter-section">
           <div class="row-filter">
             <div class="applied-filter">
-              <ul>
+              <ul v-for="(filter, i) in selectList" :key="i">
                 <li>
-                  <span>Zari Border</span><a class="remove" href="#">X</a>
+                  <span>{{filter}}</span><a @click="rmByIndex(i)" class="remove" href="#">X</a>
                 </li>
               </ul>
             </div>
@@ -53,34 +56,51 @@
       </div>
     </div>
     <div class="product-main">
-      <div class="sidebar-filter">
+      <div :class="[!isOpen ? 'sidebar-filter ' : 'sidebar-filter hidefilter']">
         <div class="sidebar-inner">
-    <ul class="filter-component">
-    <li class="filter-box" v-for="(item,index) in response.filters" :key="index">
-      <label :for=item.filter_lable>{{item.filter_lable}}<span class="show">+</span><span class="hide">-</span></label>
-      <ul class="" >
-        <li class="women" v-for="(itemf, i) in item.options" :key="i" >
-          <input type="checkbox" :name="itemf.value_key" :id=itemf.value_key>
-          <label :for=itemf.value_key :value=itemf.value>{{itemf.value}}</label>
-        </li>
-      </ul>
-    </li>
-    </ul>
-  </div>
+          <ul
+            class="filter-component"
+            v-for="(item, index) in response.filters"
+            :key="index"
+          >
+            <button @click="toggleAccordion(index)" class="filter-box">
+              <li>
+                {{ item.filter_lable }}
+                <span :class="[showlist == index ? 'show' : 'hide']"
+                  ><img src="../assets/Img/minus-sign.png" alt=""
+                /></span>
+                <span :class="[showlist == index ? 'hide' : 'show']"
+                  ><img src="../assets/Img/plus.png" alt=""
+                /></span>
+              </li>
+            </button>
+            <ul class="options_wrapper" v-if="showlist == index">
+              <li class="women" v-for="(itemf, i) in item.options" :key="i">
+                <input
+                  type="checkbox"
+                  :name="itemf.value_key"
+                  :id="itemf.value_key"
+                  v-model="selectList"
+                  @click="selectAdd(itemf.code, itemf.value)"
+                  :value="itemf.value"
+                />
+                <label :for="itemf.value_key" :value="itemf.value"
+                  >{{ itemf.value }}
+                </label>
+              </li>
+            </ul>
+          </ul>
+        </div>
       </div>
-      <div class="product-page">
-        <ProductList 
-        :Products ="Products"
-        :handleScroll="handleScroll"
-         />
+      <div :class="[isOpen ? 'product-page active' : 'product-page']">
+        <ProductList :Products="Products" :handleScroll="handleScroll" />
       </div>
     </div>
   </div>
 </template>
 <script>
 import { ref } from "vue";
-import ProductList from './ProductList.vue';
-
+import ProductList from "./ProductList.vue";
 
 export default {
   components: {
@@ -91,34 +111,89 @@ export default {
       list: ref([]),
       page: 1,
       limit: 20,
-    Products:[],
-    response:[]
+      Products: [],
+      response: [],
+      isOpen: false,
+      showlist: null,
+      selectList:[],
+      selected: [],
+      checked:false,
+      filterPassing:""
     };
   },
   methods: {
-    
-   async getData() {
-      console.log("Adding 10 more data results");
-    const data =  await fetch(
-        `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.page}&count=${this.limit}&sort_by=&sort_dir=desc&filter=`
-      ).then((res) => res.json())
-        .catch((err) => console.log(err.message));
+    check: function(e) {
+      if (e.target.checked) {
+        console.log(e.target.value)
+      }
+    },
+    rmByIndex(index) {
+      this.selectList.splice(index, 1);
+    },
+    indexFilter(array, value, code) {
+      let index = array.findIndex(
+        (a) => a.filter_value == value && a.filter_code == code
+      );
+      return index;
+    },
+    selectAdd(filter_code, filter_value) {
+      let isvalue = this.indexFilter(
+        this.selected,
+        filter_value,
+        filter_code
+      );
+      if (isvalue >= 0) {
+        this.rmByIndex(isvalue);
+      } else {
+        let filter_key = filter_code.concat("-", filter_value);
+        filter_key = filter_key.split(" ").join("+");
+        let obj = {};
+        obj["filter_filter_code"] = filter_code;
+        obj["filter_value"] = filter_value;
+        obj["filter_code"] = filter_key;
+
+        this.selected.push(obj);
+        console.log("selected data by filter", this.selected)
+        for (let a in this.selected){
+          console.log("before concat",this.filterPassing);
+          this.filterPassing=this.filterPassing.concat("|",this.selected[a].filter_code)
+          console.log("after Concat",this.filterPassing);
+          console.log(this.selected[a].filter_code)
+        }
+      }
+    },
+    showHideFilter() {
+      this.isOpen = !this.isOpen;
+    },
+    toggleAccordion(index) {
+      if (index == this.showlist) {
+        this.showlist = null;
+      } else {
+        this.showlist = index;
+      }
+    },
+    async getData() {
+      console.log("Adding Data in infinite scroll");
+      const data = await fetch(
+        `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.page}&count=${this.limit}&sort_by=&sort_dir=desc&filter=${this.filterPassing}`
+      ).then((res) => res.json());
       const list = data.result;
-      console.log("response",list);
       if (list.products.length >= this.limit) {
         this.Products = [...this.Products, ...list.products];
-        console.log("nakjbnskjn",this.Products);
         this.response = list;
-        console.log(this.response)
-      } 
-      },
-      handleScroll(isvisible){
-        if (!isvisible){return}
-        console.log("handled")
-        this.page++
-        this.getData()
+      }
     },
-  },
+    handleScroll(isvisible) {
+      if (!isvisible) {
+        return;
+      }
+      this.page++;
+      this.getData();
+    },
+  }, 
+watch(){
+  this.getData()
+},
   mounted() {
     this.getData();
   },

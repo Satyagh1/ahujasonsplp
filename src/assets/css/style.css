@@ -68,13 +68,15 @@ margin-bottom: -3px;
 }
 /**************************** Header Navbar Design******************************* */
 .header{
+    position: sticky !important;
+    top: 0;
     width: 100%;
-    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
-    box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);;
+    box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
+    z-index: 10;
 }
 .navbar{
     width: 30%;
@@ -228,6 +230,7 @@ a.logo {
 .filter-top{
     display: flex;
     flex-wrap: wrap;
+    
 }
 .product-list-main .sidebar-filter {
     min-width: auto!important;
@@ -235,8 +238,11 @@ a.logo {
     margin-left: 0!important;
     padding-right: 0;
     flex-grow: 0!important;
-    width: 21%;
-    flex: 0 0 21%;
+    width: 18%;
+    flex: 0 0 18%;
+transition: 0.5s all ease-out;
+position: sticky;
+    top: 0;
 }
 .product-list-main h3 {
     font-weight: 500;
@@ -295,8 +301,13 @@ a.logo {
     margin-right: 0;
     display: flex;
 }
+.applied-filter::-webkit-scrollbar {
+    display: none;
+}
 .applied-filter {
     width: 70%;
+    display: flex;
+    overflow-x: scroll;
 }
 .product-sort {
     margin-bottom: 0;
@@ -362,7 +373,7 @@ li .remove {
 }
 /* *********************** Product List Design *******************************/
 .product-page{
-    width: 75%;
+    width: 81%;
 }
 .product-container{
     display: flex;
@@ -372,11 +383,14 @@ li .remove {
     align-items: center;
 }
 .slide-box {
-    width: 23%;
+    width: 22%;
 }
  .product-box {
     position: relative;
     overflow: hidden;
+}
+.image-single img {
+    width: 100%;
 }
 a.wishlist {
     z-index: 2;
@@ -412,6 +426,15 @@ span.price {
     color: #4C0B36!important;
     font-family: Jost-medium;
 }
+/* .sidebar-inner {
+    position: sticky;
+    top: 0;
+}
+ul.options_wrapper {
+    height: 200px;
+    overflow: scroll;
+    overflow-x: hidden;
+} */
 .sidebar-inner ul {
     list-style: none;
 }
@@ -419,9 +442,20 @@ span.price {
 .sidebar-filter{
     width: 25%;
 }
-input[type="checkbox"]#checkbox1:checked + span {
-    border-color: red;
-  background-color:red;
+input[type='checkbox'] {
+    accent-color: #4C0B36;
+}
+.filter-component button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: none;
+    background: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 15px 0 12px 0;
 }
 li.filter-box {
     font-size: 14px;
@@ -432,20 +466,24 @@ li.filter-box {
     padding-left: 5px;
     border-bottom: 1px solid #e9e9ed;
 }
-.filter-box label .hide{
+.filter-box li .hide{
     display: none
 }
-.filter-box label .show{
+.filter-box li .show{
     display: block;
+    width: 10%;
 }
-.filter-box>label {
+.filter-box>li {
     font-size: 1rem;
     font-family: jost-semibold;
     display: flex;
     justify-content: space-between;
 }
-.filter-box>label span{
+.filter-box>li span{
     font-size: 16px;
+}
+.filter-box li .show img {
+    width: 50%;
 }
 li.women {
     padding: 3% 0%;
@@ -455,4 +493,12 @@ li.women label{
     font-size: 14px;
     font-weight: 200;
     margin-left: 15px;
+}
+.hidefilter{
+display: none;
+transition: 0.5s all ease-out;
+}
+.active{
+    width: 100%;
+    transition: 0.5s all ease-out;
 }
