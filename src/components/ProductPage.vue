@@ -30,25 +30,17 @@
         <div class="product-filter-section">
           <div class="row-filter">
             <div class="applied-filter">
-              <ul v-for="(filter, i) in selectList" :key="i">
-                <li>
-                  <span>{{filter}}</span><a @click="rmByIndex(i)" class="remove" href="#">X</a>
+              <ul>
+                <li v-for="(filter, i) in selected" :key="i">
+                  <span>{{ filter.filter_value }}</span
+                  ><a @click="rmByIndex(i)" class="remove" href="#">X</a>
                 </li>
               </ul>
             </div>
             <div class="product-sort">
               <div class="sort-product">
-                <strong
-                  >Sort by : &nbsp;
-                  <div class="new">
-                    <span>Newest</span>
-                    <img
-                      class="arrow-sort"
-                      src="../assets/Img/down-arrow.png"
-                      alt=""
-                    />
-                  </div>
-                </strong>
+                <strong>Sort by : &nbsp;</strong>
+                <span class="sortby-arrow">Price: Low to High</span>
               </div>
             </div>
           </div>
@@ -80,9 +72,8 @@
                   type="checkbox"
                   :name="itemf.value_key"
                   :id="itemf.value_key"
-                  v-model="selectList"
                   @click="selectAdd(itemf.code, itemf.value)"
-                  :value="itemf.value"
+                  :checked="abc(itemf.value)"
                 />
                 <label :for="itemf.value_key" :value="itemf.value"
                   >{{ itemf.value }}
@@ -115,33 +106,27 @@ export default {
       response: [],
       isOpen: false,
       showlist: null,
-      selectList:[],
       selected: [],
-      checked:false,
-      filterPassing:""
+      checked: false,
+      filterPassing: [],
+      uniqueArray: [],
+      passing: "",
     };
   },
   methods: {
-    check: function(e) {
+    check: function (e) {
       if (e.target.checked) {
-        console.log(e.target.value)
+        console.log(e.target.value);
       }
     },
     rmByIndex(index) {
-      this.selectList.splice(index, 1);
+      this.selected.splice(index, 1);
     },
-    indexFilter(array, value, code) {
-      let index = array.findIndex(
-        (a) => a.filter_value == value && a.filter_code == code
-      );
-      return index;
+    checkfilter() {
+      console.log(this.selected);
     },
     selectAdd(filter_code, filter_value) {
-      let isvalue = this.indexFilter(
-        this.selected,
-        filter_value,
-        filter_code
-      );
+      let isvalue = this.indexFilter(this.selected, filter_code, filter_value);
       if (isvalue >= 0) {
         this.rmByIndex(isvalue);
       } else {
@@ -153,14 +138,13 @@ export default {
         obj["filter_code"] = filter_key;
 
         this.selected.push(obj);
-        console.log("selected data by filter", this.selected)
-        for (let a in this.selected){
-          console.log("before concat",this.filterPassing);
-          this.filterPassing=this.filterPassing.concat("|",this.selected[a].filter_code)
-          console.log("after Concat",this.filterPassing);
-          console.log(this.selected[a].filter_code)
-        }
       }
+    },
+    indexFilter(arr, value, code) {
+      let index = arr.findIndex(
+        (x) => x.filter_code == value && x.filter_value == code
+      );
+      return index;
     },
     showHideFilter() {
       this.isOpen = !this.isOpen;
@@ -175,12 +159,12 @@ export default {
     async getData() {
       console.log("Adding Data in infinite scroll");
       const data = await fetch(
-        `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.page}&count=${this.limit}&sort_by=&sort_dir=desc&filter=${this.filterPassing}`
+        `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.page}&count=${this.limit}&sort_by=&sort_dir=desc&filter=`
       ).then((res) => res.json());
       const list = data.result;
-      if (list.products.length >= this.limit) {
+      this.response = list;
+      if (this.response.products.length <= this.limit) {
         this.Products = [...this.Products, ...list.products];
-        this.response = list;
       }
     },
     handleScroll(isvisible) {
@@ -190,10 +174,24 @@ export default {
       this.page++;
       this.getData();
     },
-  }, 
-watch(){
-  this.getData()
-},
+      abc(value) {
+        
+      let a =
+        this.selected.findIndex((x) => x.filter_value == value) >= 0
+          ? true
+          : false;
+      return a;
+    },
+  },
+  computed: {
+
+    filterdata() {
+      let v = this.selectedAddOns.map((data) => {
+        console.log("data", data);
+      });
+      return v;
+    },
+  },
   mounted() {
     this.getData();
   },

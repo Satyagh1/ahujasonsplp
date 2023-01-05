@@ -1,3 +1,14 @@
+@media screen and (max-width: 900px) {
+    .navbar {
+        width: 40%;
+    }
+    .navbar-nav ul li a {
+        font-size: 13px;
+    }
+    .left .left-inner ul li a {
+        font-size: 13px;
+    }
+}
 @media screen and (max-width: 768px) {
     .slide-box {
         width: 31%;

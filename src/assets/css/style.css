@@ -301,11 +301,16 @@ position: sticky;
     margin-right: 0;
     display: flex;
 }
-.applied-filter::-webkit-scrollbar {
+.applied-filter>ul::-webkit-scrollbar {
     display: none;
 }
 .applied-filter {
-    width: 70%;
+    width: 75%;
+}
+/* .applied-filter ul li{
+    width: 100%;
+} */
+.applied-filter ul{
     display: flex;
     overflow-x: scroll;
 }
@@ -314,35 +319,49 @@ position: sticky;
     position: relative;
     padding-right: 0;
     margin-right: 0;
-    width: 30%;
+    width: 25%;
 }
+
 .sort-product {
-    float: right;
-    padding: 8px 7px;
-    font-size: 14px;
-    color: #282c3f;
-    cursor: pointer;
-    position: relative;
-    width: 100%;
-    max-width: 250px;
-    box-sizing: border-box;
-    border-radius: 2px;
-    border: 1px solid #d3d3d3;
+        float: right;
+        padding: 8px 7px;
+        font-size: 14px;
+        color: #282c3f;
+        cursor: pointer;
+        position: relative;
+        width: 100%;
+        max-width: 250px;
+        box-sizing: border-box;
+        border-radius: 2px;
+        border: 1px solid #d3d3d3;
 }
 .sort-product strong {
-    display: flex;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+    width: 30%;
 }
-.sort-product .new {
-    display: flex;
-    justify-content: space-between;
-    width: 70%;
+.sort-product span {
+    text-transform: capitalize;
+    color: #282c3f;
+    font-family: "Jost-medium";
+    width: 60%;
     float: right;
 }
-.new img{
-    width: 15px;
+.sortby-arrow {
+    background-image: url(../Img/down-arrow.png);
+    background-size: 14px;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: center;
+    width: 14px;
+    height: 20px;
+    padding-right: 22px;
+    font-weight: 400;
 }
-.sort-product:hover .new img{
-    transform: rotateX(180deg);
+.sort-product:hover .sortby-arrow{
+  background: url(../Img/down-arrow.png) 0 0 repeat;
+    transform: rotate(180deg);
 }
 .inline-block{
     display: inline-block;
@@ -502,3 +521,26 @@ transition: 0.5s all ease-out;
     width: 100%;
     transition: 0.5s all ease-out;
 }
+.sort-product:hover .new img{
+    transform: rotateX(180deg);
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #3e8e41;}
