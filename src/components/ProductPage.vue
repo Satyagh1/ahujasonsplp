@@ -38,9 +38,20 @@
               </ul>
             </div>
             <div class="product-sort">
-              <div class="sort-product">
-                <strong>Sort by : &nbsp;</strong>
-                <span class="sortby-arrow">Price: Low to High</span>
+              <div class="sort-product" >
+                <strong
+                  >Sort by : &nbsp;
+                  <span class="sortby-arrow">Discount</span>
+                </strong>
+                <ul class="sort-list">
+                  <li
+                  v-for="(sort, i) in response.sort"
+                    :key="i"
+                    @click="getsort(sort.code)"
+                  >
+                    {{ sort.label }}
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -104,45 +115,75 @@ export default {
       limit: 20,
       Products: [],
       response: [],
+      filterres: [],
       isOpen: false,
       showlist: null,
       selected: [],
       checked: false,
-      filterPassing: [],
-      uniqueArray: [],
-      passing: "",
+      filterPassing: "",
+      srt: "",
     };
   },
   methods: {
-    check: function (e) {
-      if (e.target.checked) {
-        console.log(e.target.value);
-      }
+    getsort(srt_code){
+      this.srt=srt_code;
+      console.log(srt_code,"this sort code")
     },
     rmByIndex(index) {
       this.selected.splice(index, 1);
-    },
-    checkfilter() {
-      console.log(this.selected);
+      this.filterPassing=""
+      for (let a in this.selected) {
+        if (this.selected[this.selected.length - 1] === this.selected[a]) {
+          this.filterPassing = this.filterPassing.concat(
+            "",
+            this.selected[a].filter_code
+          );
+          console.log("before if ", this.filterPassing);
+        } else {
+          this.filterPassing = this.filterPassing.concat(
+            this.selected[a].filter_code,
+            ","
+          );
+          console.log("after if ", this.filterPassing);
+        }
+      }
     },
     selectAdd(filter_code, filter_value) {
+      this.filterPassing = "";
       let isvalue = this.indexFilter(this.selected, filter_code, filter_value);
       if (isvalue >= 0) {
         this.rmByIndex(isvalue);
       } else {
         let filter_key = filter_code.concat("-", filter_value);
-        filter_key = filter_key.split(" ").join("+");
+        filter_key = filter_key.split(" ").join("%2B");
+        filter_key = filter_key.split("&").join("%26");
         let obj = {};
         obj["filter_filter_code"] = filter_code;
         obj["filter_value"] = filter_value;
         obj["filter_code"] = filter_key;
 
         this.selected.push(obj);
+        console.log(this.selected);
+      }
+      for (let a in this.selected) {
+        if (this.selected[this.selected.length - 1] === this.selected[a]) {
+          this.filterPassing = this.filterPassing.concat(
+            "",
+            this.selected[a].filter_code
+          );
+          console.log("before if ", this.filterPassing);
+        } else {
+          this.filterPassing = this.filterPassing.concat(
+            this.selected[a].filter_code,
+            ","
+          );
+          console.log("after if ", this.filterPassing);
+        }
       }
     },
     indexFilter(arr, value, code) {
       let index = arr.findIndex(
-        (x) => x.filter_code == value && x.filter_value == code
+        (x) => x.filter_filter_code == value && x.filter_value == code
       );
       return index;
     },
@@ -158,14 +199,16 @@ export default {
     },
     async getData() {
       console.log("Adding Data in infinite scroll");
-      const data = await fetch(
-        `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.page}&count=${this.limit}&sort_by=&sort_dir=desc&filter=`
-      ).then((res) => res.json());
-      const list = data.result;
+     await fetch(
+        `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.page}&count=${this.limit}&sort_by=${this.srt}&sort_dir=desc&filter=${this.filterPassing}`
+      ).then((res) => res.json())
+      .then((data)=>{
+        const list = data.result;
       this.response = list;
       if (this.response.products.length <= this.limit) {
         this.Products = [...this.Products, ...list.products];
       }
+      })
     },
     handleScroll(isvisible) {
       if (!isvisible) {
@@ -174,8 +217,7 @@ export default {
       this.page++;
       this.getData();
     },
-      abc(value) {
-        
+    abc(value) {
       let a =
         this.selected.findIndex((x) => x.filter_value == value) >= 0
           ? true
@@ -183,13 +225,29 @@ export default {
       return a;
     },
   },
-  computed: {
-
-    filterdata() {
-      let v = this.selectedAddOns.map((data) => {
-        console.log("data", data);
-      });
-      return v;
+  watch: {
+    selected: {
+      handler() {
+        console.log("water");
+        // if (newVal != oldVal) {
+        // console.log(oldVal,"old ")
+        this.Products = [];
+        // debugger;
+        this.getData();
+        console.log("data---", this.Products);
+        // }
+      },
+      deep: true,
+    },
+    srt: {
+      handler(newVal, oldVal) {
+        console.log("sort filter run");
+        if (newVal != oldVal) {
+          this.Products = [];
+          this.getData();
+        }
+      },
+      deep: true,
     },
   },
   mounted() {
