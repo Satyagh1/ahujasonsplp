@@ -24,7 +24,7 @@
               </div>
             </div>
           </div>
-         <div v-if="Products.length" v-observe-visibility="handleScroll"></div>
+         <div  v-observe-visibility="handleScroll"></div>
         </div>
 </template>
 <script>

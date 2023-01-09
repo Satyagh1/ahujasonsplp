@@ -4,7 +4,7 @@
       <div class="product-width product-count">
         <div class="items">
           <h1>{{ response.name }}</h1>
-          <p class="item_count font-bold">{{ response.count }}</p>
+          <p class="item_count font-bold">{{ result.count }}</p>
         </div>
       </div>
     </div>
@@ -38,16 +38,18 @@
               </ul>
             </div>
             <div class="product-sort">
-              <div class="sort-product" >
+              <div class="sort-product">
                 <strong
                   >Sort by : &nbsp;
-                  <span class="sortby-arrow">Discount</span>
+                  <span class="sortby-arrow">{{ label }}</span>
                 </strong>
                 <ul class="sort-list">
                   <li
-                  v-for="(sort, i) in response.sort"
+                    v-for="(sort, i) in response.sort"
                     :key="i"
-                    @click="getsort(sort.code)"
+                    :class="[sort.label == label ? 'liactive' : '']"
+                    @click="getsort(sort.code, sort.label)"
+                    :value="sort.label"
                   >
                     {{ sort.label }}
                   </li>
@@ -101,7 +103,6 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
 import ProductList from "./ProductList.vue";
 
 export default {
@@ -110,28 +111,32 @@ export default {
   },
   data() {
     return {
-      list: ref([]),
       page: 1,
       limit: 20,
       Products: [],
       response: [],
-      filterres: [],
+      result: [],
+      flag: false,
       isOpen: false,
+      isvisible:true,
       showlist: null,
       selected: [],
       checked: false,
       filterPassing: "",
       srt: "",
+      label: "",
+
     };
   },
   methods: {
-    getsort(srt_code){
-      this.srt=srt_code;
-      console.log(srt_code,"this sort code")
+    getsort(srt_code, srt_label) {
+      this.srt = srt_code;
+      this.label = srt_label;
+      console.log(this.srt, "this sort code");
     },
     rmByIndex(index) {
       this.selected.splice(index, 1);
-      this.filterPassing=""
+      this.filterPassing = "";
       for (let a in this.selected) {
         if (this.selected[this.selected.length - 1] === this.selected[a]) {
           this.filterPassing = this.filterPassing.concat(
@@ -199,23 +204,33 @@ export default {
     },
     async getData() {
       console.log("Adding Data in infinite scroll");
-     await fetch(
+      await fetch(
         `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.page}&count=${this.limit}&sort_by=${this.srt}&sort_dir=desc&filter=${this.filterPassing}`
-      ).then((res) => res.json())
-      .then((data)=>{
-        const list = data.result;
-      this.response = list;
-      if (this.response.products.length <= this.limit) {
-        this.Products = [...this.Products, ...list.products];
-      }
-      })
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          const list = data.result;
+          console.log("list data", list);
+          this.result = list;
+          console.log("Result", this.result);
+          if (this.flag == true) {
+            this.response = list;
+            console.log("response", this.response);
+            this.flag = false;
+          }
+            this.Products = [...this.Products, ...list.products];
+        });
     },
-    handleScroll(isvisible) {
-      if (!isvisible) {
+    handleScroll(isVisible, entry) {
+      this.isvisible = isVisible;
+      console.log (entry,this.isvisible, isVisible)
+      if (this.isvisible!=isVisible) {
+        console.log("underr asnckjnaskjcnkajsnj")
+        this.page++;
+      this.getData();
         return;
       }
-      this.page++;
-      this.getData();
+      this.isvible=true;
     },
     abc(value) {
       let a =
@@ -231,6 +246,7 @@ export default {
         console.log("water");
         // if (newVal != oldVal) {
         // console.log(oldVal,"old ")
+        this.page=1
         this.Products = [];
         // debugger;
         this.getData();
@@ -251,7 +267,10 @@ export default {
     },
   },
   mounted() {
+    this.flag = true;
     this.getData();
+    console.log("mounted time");
+    this.label = "newest";
   },
 };
 </script>

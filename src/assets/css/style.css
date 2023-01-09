@@ -387,6 +387,9 @@ position: sticky;
 .sort-product ul.sort-list li:hover {
     background-color: #f5f5f5;
 }
+.liactive {
+    background-color: #f5f5f5;
+}
 .inline-block{
     display: inline-block;
 }
@@ -568,3 +571,137 @@ transition: 0.5s all ease-out;
   .dropdown:hover .dropdown-content {display: block;}
   
   .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+
+  /*********************** footer css ***************************/
+  .footer {
+    display: flex;
+    align-items: flex-start;
+    padding: 2% 5%;
+}
+
+.footer-divider-logo-wrapper {
+    position: relative;
+    width: 98%;
+    height: 10px;
+    border: 1px solid #eae4cf;
+    border-right: none;
+    border-left: none;
+    margin: 50px auto
+}
+
+.footer-divider-logo {
+    position: absolute;
+    background-color: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    width: 120px;
+    text-align: center;
+}
+
+.footer-divider-logo img {
+    width: 70px;
+
+}
+
+.footer ul li {
+    list-style: none;
+    font-size: 16px;
+    opacity: 0.8;
+    line-height: 36px;
+
+}
+
+.footer-col {
+    width: 25%;
+    padding: 0 1%;
+    box-sizing: border-box;
+    text-align: start;
+
+}
+
+
+.footer-col h2,
+.footer-col-last h2 {
+    font-size: 16px;
+    letter-spacing: 3.2px;
+    line-height: 23px;
+    font-weight: 500;
+    margin-bottom: 10px;
+
+}
+
+.footer-col-last {
+    width: 40%;
+    display: inline-block;
+}
+
+.footer-col-last p {
+    font-size: 14px;
+    width: 85%;
+}
+
+.footer-input {
+    border-bottom: 2px solid #000000;
+    background: white;
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.footer-input input {
+    border: none;
+    width: 100%;
+    background-color: transparent;
+    padding: 10px 10px 10px 0;
+}
+
+.footer-input button {
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 700;
+    border: none;
+    background: transparent;
+}
+
+.footer-input button:focus {
+    outline: none;
+}
+
+.footer-input input:focus {
+    outline: none;
+}
+
+.footer-social-media_container {
+    margin: 50px 0;
+}
+
+.footer-social-media_container h3 {
+    font-size: 14px;
+}
+
+.social-media {
+
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.social-media a {
+    margin-right: 20px;
+}
+
+.footer-copy-right {
+    width: 110%;
+}
+
+.footer-copy-right p {
+    font-size: 14px;
+    margin: 0;
+    width: 100%;
+}
+.social-media a img{
+    width: 85%;
+}
