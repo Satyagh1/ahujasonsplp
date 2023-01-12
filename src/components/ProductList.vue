@@ -6,12 +6,12 @@
             :key="index"
           >
             <div class="product-box">
-              <a :href="item.url_key">
+              <a href="/">
                 <div class="image-single">
                   <img :src="item.image" alt="" />
                 </div>
               </a>
-              <a :href="item.url_key" class="wishlist"
+              <a href="/" class="wishlist"
                 ><img src="../assets/Img/Heart.svg" alt=""
               /></a>
             </div>
@@ -30,6 +30,6 @@
 <script>
 export default {
   name: "Product-List",
-props:['Products','handleScroll'],
+props:['Products','handleScroll','dataCount'],
 };
 </script>

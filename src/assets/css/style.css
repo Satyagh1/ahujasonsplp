@@ -238,7 +238,7 @@ a.logo {
     min-width: auto!important;
     padding-left: 20px!important;
     margin-left: 0!important;
-    padding-right: 0;
+    padding-right: 20px;
     flex-grow: 0!important;
     width: 18%;
     flex: 0 0 18%;
@@ -285,11 +285,11 @@ position: sticky;
     margin-right: 5px;
 }
 .product-list-main .product-filter-section {
-    width: 75%;
-    max-width: 75%;
-    flex: 0 0 75%;
-    padding-left: 0;
-    padding-right: 0;
+    width: 76%;
+    max-width: 76%;
+    flex: 0 0 76%;
+    padding-left: 15px;
+    padding-right: 12px;
 }
 .row-filter {
     width: 100%;
@@ -422,9 +422,11 @@ li .remove {
     width: 81%;
 }
 .product-container{
+    padding-left: 15px;
+    padding-right: 15px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     row-gap: 18px;
     align-items: center;
 }

@@ -1,29 +1,30 @@
 <template>
-  <div >
+  <div>
     <TopNav />
     <StickyNav />
-  <MyProduct  />
-<MyFooter/>
-
+    <!-- <MyProduct/> -->
+    <router-view></router-view>
+    <MyFooter />
   </div>
 </template>
 
 <script>
-import "./assets/css/style.css"
-import "./assets/css/phone.css"
-import TopNav from './components/TopNav.vue'
-import StickyNav from './components/StickyNav.vue'
-import MyProduct from './components/ProductPage.vue';
-import MyFooter from './components/Footer.vue';
+import "./assets/css/style.css";
+import "./assets/css/phone.css";
+import TopNav from "./components/TopNav.vue";
+import StickyNav from "./components/StickyNav.vue";
+// import MyProduct from "./components/ProductPage.vue";
+import MyFooter from "./components/Footer.vue";
+
 export default {
-  name: 'App',
+  name: "App",
   components: {
     TopNav,
     StickyNav,
-    MyProduct,
-    MyFooter
+    // MyProduct,
+    MyFooter,
   },
-  };
+};
 </script>
 
 

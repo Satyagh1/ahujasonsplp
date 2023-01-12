@@ -86,7 +86,7 @@
                   :name="itemf.value_key"
                   :id="itemf.value_key"
                   @click="selectAdd(itemf.code, itemf.value)"
-                  :checked="abc(itemf.value)"
+                  :checked="checkbox_control(itemf.value)"
                 />
                 <label :for="itemf.value_key" :value="itemf.value"
                   >{{ itemf.value }}
@@ -97,7 +97,7 @@
         </div>
       </div>
       <div :class="[isOpen ? 'product-page active' : 'product-page']">
-        <ProductList :Products="Products" :handleScroll="handleScroll" />
+        <ProductList :Products="Products" :handleScroll="handleScroll" :dataCount="dataCount" />
       </div>
     </div>
   </div>
@@ -125,31 +125,33 @@ export default {
       filterPassing: "",
       srt: "",
       label: "",
-
+      dataCount: false,
     };
   },
   methods: {
     getsort(srt_code, srt_label) {
       this.srt = srt_code;
       this.label = srt_label;
+      this.$router.push({query:{ ...this.$route.query,  sort: this.srt }}).catch(()=>{});
       console.log(this.srt, "this sort code");
     },
     rmByIndex(index) {
       this.selected.splice(index, 1);
       this.filterPassing = "";
+      this.$router.push({ name: "Home" })
+
       for (let a in this.selected) {
         if (this.selected[this.selected.length - 1] === this.selected[a]) {
           this.filterPassing = this.filterPassing.concat(
             "",
             this.selected[a].filter_code
           );
-          console.log("before if ", this.filterPassing);
+            this.$router.push({query: { ...this.$route.query, filter: this.filterPassing }}).catch(()=>{});
         } else {
           this.filterPassing = this.filterPassing.concat(
             this.selected[a].filter_code,
             ","
           );
-          console.log("after if ", this.filterPassing);
         }
       }
     },
@@ -168,7 +170,7 @@ export default {
         obj["filter_code"] = filter_key;
 
         this.selected.push(obj);
-        console.log(this.selected);
+        console.log(this.selected,"first selected ");
       }
       for (let a in this.selected) {
         if (this.selected[this.selected.length - 1] === this.selected[a]) {
@@ -176,13 +178,11 @@ export default {
             "",
             this.selected[a].filter_code
           );
-          console.log("before if ", this.filterPassing);
-        } else {
-          this.filterPassing = this.filterPassing.concat(
-            this.selected[a].filter_code,
-            ","
-          );
-          console.log("after if ", this.filterPassing);
+            // this.$router.push({query: this.$route.query, filter: this.filterPassing })
+            this.$router.push({query: { ...this.$route.query, filter: this.filterPassing }}).catch(()=>{});
+          console.log(this.$route.query.filter,"this is router");
+          this.filterPassing=this.$route.query.filter
+        } else { this.filterPassing = this.filterPassing.concat( this.selected[a].filter_code, "," );
         }
       }
     },
@@ -204,35 +204,43 @@ export default {
     },
     async getData() {
       console.log("Adding Data in infinite scroll");
-      await fetch(
+     fetch(
         `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.page}&count=${this.limit}&sort_by=${this.srt}&sort_dir=desc&filter=${this.filterPassing}`
       )
         .then((res) => res.json())
         .then((data) => {
           const list = data.result;
-          console.log("list data", list);
-          this.result = list;
-          console.log("Result", this.result);
+          this.result = list;  
+          if (this.result.count >=  this.limit) {
+            console.log("main chla ");
+            this.dataCount=true;
+          }       
           if (this.flag == true) {
             this.response = list;
-            console.log("response", this.response);
             this.flag = false;
           }
             this.Products = [...this.Products, ...list.products];
-        });
+        })
+.catch((error) => {
+  console.log(error);
+})
     },
-    handleScroll(isVisible, entry) {
-      this.isvisible = isVisible;
-      console.log (entry,this.isvisible, isVisible)
-      if (this.isvisible!=isVisible) {
-        console.log("underr asnckjnaskjcnkajsnj")
+    handleScroll(isVisible) {
+      if (this.dataCount  && this.isvisible==isVisible){
         this.page++;
-      this.getData();
-        return;
+        this.getData();
       }
-      this.isvible=true;
+      else
+      return;
+      // // this.isvisible = isVisible;
+      // if (this.isvisible==isVisible) {
+      //   this.page++;
+      //   this.getData();
+      // }
+      // this.isvisible=true;
+      //   return;
     },
-    abc(value) {
+    checkbox_control(value) {
       let a =
         this.selected.findIndex((x) => x.filter_value == value) >= 0
           ? true
@@ -243,21 +251,14 @@ export default {
   watch: {
     selected: {
       handler() {
-        console.log("water");
-        // if (newVal != oldVal) {
-        // console.log(oldVal,"old ")
-        this.page=1
+        this.page==1
         this.Products = [];
-        // debugger;
         this.getData();
-        console.log("data---", this.Products);
-        // }
       },
       deep: true,
     },
     srt: {
       handler(newVal, oldVal) {
-        console.log("sort filter run");
         if (newVal != oldVal) {
           this.Products = [];
           this.getData();
@@ -267,10 +268,29 @@ export default {
     },
   },
   mounted() {
+    console.log('Mounted from Product Page')
     this.flag = true;
-    this.getData();
-    console.log("mounted time");
     this.label = "newest";
+    console.log(this.$route.query);
+    if(this.$route.query.filter !=  undefined){
+      console.log("this is $route", this.$route.query);
+      let a = this.$route.query.filter.split(",");
+      console.log(a,"aaaaaa");
+      a.forEach((el)=>{
+        let val = el.split('-')
+        console.log("aya", val)
+        val[1] = val[1].split("%2B").join(" "); 
+        val[1] = val[1].split("%26").join("&");
+          this.selectAdd(val[0], val[1])
+      })
+      }else if(this.$route.query.sort!=undefined){
+         let b = this.$route.query.sort
+      console.log(b,"thiss is sort during mounted");
+      this.getsort(b, b)
+      }
+      else{
+        this.getData();
+      }
   },
 };
 </script>
