@@ -211,7 +211,7 @@ export default {
         .then((data) => {
           const list = data.result;
           this.result = list;  
-          if (this.result.count >=  this.limit) {
+          if (this.result.count <=  this.limit) {
             console.log("main chla ");
             this.dataCount=true;
           }       

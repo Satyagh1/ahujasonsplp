@@ -1,16 +1,264 @@
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 950px) {
     .navbar {
         width: 40%;
     }
+
+    .logo img {
+        width: 120px;
+    }
+
+    .left {
+        display: flex;
+    }
+
+    .left .left-inner {
+        width: 60%;
+    }
+
+    .left .logins {
+        width: 35%;
+    }
+
+    .product-list-main .product-filter-section {
+        max-width: 74%;
+        flex: 0 0 78%;
+    }
+
+    .applied-filter {
+        width: 65%;
+    }
+
+    .product-list-main .product-filter-section {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .slide-box {
+        width: 32%;
+    }
+
+    .product-sort {
+        width: 35%;
+    }
+
+    .row-filter {
+        padding-right: 0px;
+    }
+
     .navbar-nav ul li a {
         font-size: 13px;
     }
+
     .left .left-inner ul li a {
         font-size: 13px;
     }
 }
+
 @media screen and (max-width: 768px) {
-    .slide-box {
-        width: 31%;
+    .top-nav .left {
+        width: 100%;
+        display: block;
     }
+
+    .top-nav .left p {
+        text-align: center;
+    }
+
+    .top-nav .right {
+        display: none;
+    }
+
+    .header {
+        padding: 5px 15px;
+        display: inline-block;
+        width: 94%;
+    }
+
+    .navbar-sticky {
+        z-index: 10;
+        position: sticky;
+        top: 0;
+    }
+
+    .header-nav {
+        position: fixed;
+        top: 0;
+    }
+
+    .d-none {
+        display: none;
+    }
+
+    .mobile-logo {
+        display: block;
+        position: relative;
+        width: auto;
+        float: left;
+        margin-left: 30px;
+        cursor: pointer;
+    }
+
+    .mobile-logo img {
+        width: 70px !important;
+        height: auto;
+        top: 4px !important;
+        padding: 8px 17px;
+        position: relative;
+    }
+
+    .left {
+        float: right;
+        display: block;
+    }
+
+    .left .left-inner {
+        display: none;
+    }
+
+    .left .logins {
+        float: right;
+        margin: 5px 0;
+        width: 90%;
+    }
+
+    .left .logins ul {
+        margin-top: 16px;
+    }
+
+    .navbar {
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0;
+        padding-left: 0%;
+        background: #00000030;
+        display: none;
+    }
+
+    .navbar-nav {
+        width: 80%;
+        background: grey;
+        position: relative;
+        z-index: 12;
+        height: 100%;
+    }
+
+    .navbar-nav .nav-item {
+        display: block;
+        float: none;
+        border-bottom: 1px solid #e2e2e2;
+        width: 100%;
+    }
+
+    .navbar-nav ul {
+        overflow: auto;
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 15px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-nav ul li a {
+        justify-content: space-between;
+        padding: 16px 15px;
+        font-size: 15px;
+        padding: 1.3rem;
+    }
+
+    .close-btn {
+        width: 10%;
+        float: right;
+        top: 17px;
+        right: 0px;
+        position: relative;
+        display: block;
+    }
+
+    .close-btn img {
+        width: 20px;
+    }
+
+    .active-menu {
+        display: block;
+        position: fixed;
+        top: 0;
+        z-index: 15;
+        height: 100%;
+    }
+
+    .toggle {
+        display: block;
+        margin-left: 2px;
+        float: left;
+        position: absolute;
+        top: 28px;
+        width: 31px;
+        margin-top: 0;
+        display: block;
+        height: 26px;
+    }
+
+    .toggle img {
+        width: 21px;
+        margin-left: 1px;
+        margin: 6px 0;
+    }
+    .filter-top{
+        display: none;
+    }
+    .sidebar-filter {
+        display: none;
+    }
+    .product-page {
+        width: 100%;
+    }
+    .slide-box {
+        width: 48%;
+    }
+/********************Footer Design**************************/
+.footer {
+    flex-direction: column-reverse;
+    padding: 0% 2%;
+}
+.first-footer {
+    width: 100%;
+    flex-direction: column;
+    padding: 0;
+}
+.footer-col {
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 1px solid hsla(0,0%,77.3%,.47059);
+    padding: 15px 0%;
+}
+.footer-col h2 span img{
+    display: block;
+    width: 16px;
+    float: right;
+}
+.transform img{
+transform: rotate(180deg);
+}
+.footer-col-last {
+    width: 100%;
+}
+.social-media {
+    width: 70%;
+}
+.list-foot{
+    display: none;
+}
+.footer-active{
+    display: block;
+}
+.footer-copy{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 22px 2%;
+}
+
 }

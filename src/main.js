@@ -3,6 +3,8 @@ import App from './App.vue'
 import VueObserveVisibility from 'vue-observe-visibility'
 import router from './routes'
 
+
+
 Vue.use(VueObserveVisibility)
 Vue.config.productionTip = false
 

@@ -6,47 +6,13 @@
       </div>
     </div>
     <div class="footer">
-      <div class="footer-col">
-        <h2>SHOP</h2>
-        <ul>
-          <li>Men</li>
-          <li>Women</li>
-          <li>Home</li>
-          <li>Sale</li>
-          <li>Collection</li>
+      <div class="first-footer">
+        <div class="footer-col" v-for="(item, index) in items" :key="index">
+        <h2 @click="toggleAcc(index)"><span :class="[checkAcc == index ? 'transform' : '']">{{ item.header }}<img src="../assets/Img/down-arrow.png" alt=""></span></h2>
+        <ul :class="[checkAcc == index ? 'list-foot footer-active' : 'list-foot']" >
+          <li v-for="(list, j) in item.content" :key="j">{{ list}}</li>
         </ul>
       </div>
-      <div class="footer-col">
-        <h2>QUICK LINKS</h2>
-        <ul>
-          <li>Ahujasons Export</li>
-          <li>Ahujasons Wholesale</li>
-          <li>Our Story</li>
-          <li>Legacy</li>
-          <li>Craftsman ship</li>
-          <li>Our Store</li>
-          <li>Blogs</li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h2>CUSTOMER SERVICE</h2>
-        <ul>
-          <li>Terms and Condition</li>
-          <li>Shipping & Delivery</li>
-          <li>Returns & Cancellation</li>
-          <li>Contact us</li>
-          <li>Store appointment</li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h2>MY PROFILE</h2>
-        <ul>
-          <li>My Account</li>
-          <li>Track Order</li>
-          <li>My Cart</li>
-          <li>Wishlist</li>
-          <li>Order History</li>
-        </ul>
       </div>
       <div class="footer-col-last">
         <h2>SIGN UP AND SAVE</h2>
@@ -66,17 +32,41 @@
             <a href="#"><img src="../assets/Img/youtube.png" alt="image" /></a>
           </div>
         </div>
-        <div class="footer-copy-right">
+        <div class="d-none footer-copy-right">
           <p>Copyright © 2021 by Ahujasons I Powered by GreenHonchos</p>
         </div>
+        
       </div>
     </div>
+      <div class="for-mobile footer-copy">
+          <p>Copyright © 2021 by Ahujasons I Powered by GreenHonchos</p>
+        </div>
   </footer>
 </template>
 
 <script>
 export default {
   name: "My-Footer",
+  data(){
+    return{
+      checkAcc:null,
+      items: [
+        {header: 'SHOP', content: ['Men','Women','Home','Sale','Collection']},
+        {header: 'QUICK LINKS', content: ['Ahujasons Export','Ahujasons Wholesale','Our Story','Legacy','Craftsman ship','Our Store','Blogs']},
+        {header: 'CUSTOMER SERVICE', content: ['Terms and Condition','Shipping & Delivery','Returns & Cancellation','Contact us','Store appointment']},
+        {header: 'MY PROFILE', content: ['My Account','Track Order','My Cart','Wishlist','Order History']},
+      ],
+    }
+  },
+  methods:{
+    toggleAcc(index){
+    if (index == this.checkAcc) {
+        this.checkAcc = null;
+      } else {
+        this.checkAcc = index;
+      }
+    }
+  }
 };
 </script>
 
