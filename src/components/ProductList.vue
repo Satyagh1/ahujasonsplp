@@ -2,7 +2,7 @@
           <div class="product-container">
           <div
             class="slide-box"
-            v-for="(item, index) in Products"
+            v-for="(item, index) in Productsitem"
             :key="index"
           >
             <div class="product-box">
@@ -24,12 +24,83 @@
               </div>
             </div>
           </div>
-         <div  v-observe-visibility="handleScroll"></div>
+         <div class="loader"  v-observe-visibility="handleScroll"><img src="../assets/Img/giphy.gif" alt=""></div>
         </div>
 </template>
 <script>
 export default {
   name: "Product-List",
-props:['Products','handleScroll','dataCount'],
+props:['Productsitem','handleScroll','dataCount'],
 };
 </script>
+<style>
+/* *********************** Product List Design *******************************/
+
+.product-container{
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 18px;
+    align-items: center;
+}
+.slide-box {
+    width: 22%;
+}
+ .product-box {
+    position: relative;
+    overflow: hidden;
+}
+.image-single img {
+    width: 100%;
+}
+a.wishlist {
+    z-index: 2;
+    position: absolute;
+    right: 5px;
+    font-size: 0;
+    display: block;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    border-radius: 30px;
+    opacity: 1;
+    color: #626262;
+    text-transform: uppercase;
+    text-decoration: none;
+    pointer-events: none;
+    padding-top: 7px;
+    transition: all .1s;
+    top: 5px;
+}
+.slide-box .product-name {
+    margin-top: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #0C0C0C;
+}
+.price {
+    margin: 5% 0%;
+}
+span.price {
+    font-size: 17px!important;
+    color: #4C0B36!important;
+    font-family: Jost-medium;
+}
+.loader{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media screen and (max-width: 950px) {
+  .slide-box {
+        width: 32%;
+    }
+}
+@media screen and (max-width: 768px) {
+  
+}
+</style>

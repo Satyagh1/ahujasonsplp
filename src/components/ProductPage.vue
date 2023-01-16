@@ -27,8 +27,7 @@
             </div>
           </div>
         </div>
-        <div class="sidebar-filter"  v-show="mobilefiltertog">
-        </div>
+        <div class="sidebar-filter" v-show="mobilefiltertog"></div>
         <div class="product-filter-section">
           <div class="row-filter">
             <div class="applied-filter">
@@ -79,28 +78,37 @@
               <button class="product-sort for-mobile" @click="togglemobile()">
                 Sort by
               </button>
-              <button class="mobile-filter for-mobile" @click="filtermobile()">Filter</button>
+              <button class="mobile-filter for-mobile" @click="filtermobile()">
+                Filter
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="product-main">
-      <div :class="[!isOpen ? 'sidebar-filter d-none ' : 'sidebar-filter hidefilter d-none ']">
-        <div
-          class="container mobileFilterSection for-mobile"
-        >
+      <div
+        :class="[
+          !isOpen
+            ? 'sidebar-filter d-none '
+            : 'sidebar-filter hidefilter d-none ',
+        ]"
+      >
+        <div class="container mobileFilterSection for-mobile">
           <div class="row">
             <div class="col-6">
               <p>Filter</p>
             </div>
-            <div class="col-6 text-right pr-4">
-            </div>
+            <div class="col-6 text-right pr-4"></div>
           </div>
         </div>
         <div class="sidebar-inner">
           <ul
-            :class="[showlist == index ? 'filter-component active-filter' : 'filter-component']"
+            :class="[
+              showlist == index
+                ? 'filter-component active-filter'
+                : 'filter-component',
+            ]"
             v-for="(item, index) in response.filters"
             :key="index"
           >
@@ -132,22 +140,26 @@
           </ul>
         </div>
       </div>
-      <div :class="[!isOpen ? 'sidebar-filter ' : 'sidebar-filter hidefilter']"  v-show="mobilefiltertog">
-        <div
-          class="container mobileFilterSection for-mobile"
-        >
+      <div class="sidebar-filter" v-show="mobilefiltertog">
+        <div class="container mobileFilterSection for-mobile">
           <div class="row">
             <div class="col-6">
               <p>Filter</p>
             </div>
             <div class="col-6 text-right pr-4">
-              <a href="#" class="filter-clear-new" @click="clearall()">Clear All</a>
+              <a href="#" class="filter-clear-new" @click="clearall()"
+                >Clear All</a
+              >
             </div>
           </div>
         </div>
         <div class="sidebar-inner">
           <ul
-            :class="[showlist == index ? 'filter-component active-filter' : 'filter-component']"
+            :class="[
+              showlist == index
+                ? 'filter-component active-filter'
+                : 'filter-component',
+            ]"
             v-for="(item, index) in response.filters"
             :key="index"
           >
@@ -178,12 +190,16 @@
             </ul>
           </ul>
         </div>
-        <button class="apply_mobile_filter for-mobile" @click="filtermobile()">Apply</button>
-        <button class="close_mobile_filter for-mobile" @click="filtermobile()">Close</button>
+        <button class="apply_mobile_filter for-mobile" @click="filtermobile()">
+          Apply
+        </button>
+        <button class="close_mobile_filter for-mobile" @click="filtermobile()">
+          Close
+        </button>
       </div>
       <div :class="[isOpen ? 'product-page active' : 'product-page']">
         <ProductList
-          :Products="Products"
+          :Productsitem="Productsitem"
           :handleScroll="handleScroll"
           :dataCount="dataCount"
         />
@@ -202,7 +218,7 @@ export default {
     return {
       page: 1,
       limit: 20,
-      Products: [],
+      Productsitem: [],
       response: [],
       result: [],
       flag: false,
@@ -226,7 +242,6 @@ export default {
       this.$router
         .push({ query: { ...this.$route.query, sort: this.srt } })
         .catch(() => {});
-      console.log(this.srt, "this sort code");
     },
     rmByIndex(index) {
       this.selected.splice(index, 1);
@@ -267,7 +282,6 @@ export default {
         obj["filter_code"] = filter_key;
 
         this.selected.push(obj);
-        console.log(this.selected, "first selected ");
       }
       for (let a in this.selected) {
         if (this.selected[this.selected.length - 1] === this.selected[a]) {
@@ -281,7 +295,6 @@ export default {
               query: { ...this.$route.query, filter: this.filterPassing },
             })
             .catch(() => {});
-          console.log(this.$route.query.filter, "this is router");
           this.filterPassing = this.$route.query.filter;
         } else {
           this.filterPassing = this.filterPassing.concat(
@@ -308,7 +321,6 @@ export default {
       }
     },
     async getData() {
-      console.log("Adding Data in infinite scroll");
       fetch(
         `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.page}&count=${this.limit}&sort_by=${this.srt}&sort_dir=desc&filter=${this.filterPassing}`
       )
@@ -317,14 +329,13 @@ export default {
           const list = data.result;
           this.result = list;
           if (this.result.count >= this.limit) {
-            console.log("main chla ");
             this.dataCount = true;
           }
           if (this.flag == true) {
             this.response = list;
             this.flag = false;
           }
-          this.Products = [...this.Products, ...list.products];
+          this.Productsitem = [...this.Productsitem, ...list.products];
         })
         .catch((error) => {
           console.log(error);
@@ -351,31 +362,30 @@ export default {
       return a;
     },
     togglemobile() {
-      console.log("called");
       if (this.mobiletoggle == false) {
         this.mobiletoggle = true;
       } else {
         this.mobiletoggle = false;
       }
     },
-    filtermobile(){
+    filtermobile() {
       if (this.mobilefiltertog == false) {
         this.mobilefiltertog = true;
       } else {
         this.mobilefiltertog = false;
       }
     },
-    clearall(){
-      this.selected=[];
+    clearall() {
+      this.selected = [];
       this.filterPassing = "";
       this.$router.push({ name: "Home" });
-      }
+    },
   },
   watch: {
     selected: {
       handler() {
         this.page == 1;
-        this.Products = [];
+        this.Productsitem = [];
         this.getData();
       },
       deep: true,
@@ -383,7 +393,7 @@ export default {
     srt: {
       handler(newVal, oldVal) {
         if (newVal != oldVal) {
-          this.Products = [];
+          this.Productsitem = [];
           this.getData();
         }
       },
@@ -391,24 +401,18 @@ export default {
     },
   },
   mounted() {
-    console.log("Mounted from Product Page");
     this.flag = true;
     this.label = "newest";
-    console.log(this.$route.query);
     if (this.$route.query.filter != undefined) {
-      console.log("this is $route", this.$route.query);
       let a = this.$route.query.filter.split(",");
-      console.log(a, "aaaaaa");
       a.forEach((el) => {
         let val = el.split("-");
-        console.log("aya", val);
         val[1] = val[1].split("%2B").join(" ");
         val[1] = val[1].split("%26").join("&");
         this.selectAdd(val[0], val[1]);
       });
     } else if (this.$route.query.sort != undefined) {
       let b = this.$route.query.sort;
-      console.log(b, "thiss is sort during mounted");
       this.getsort(b, b);
     } else {
       this.getData();
@@ -416,3 +420,604 @@ export default {
   },
 };
 </script>
+<style>
+/* ************************** Product Page Design *********************************/
+.product-page{
+    width: 81%;
+}
+  .container-fluid {
+      width: 100%;
+      margin-right: auto;
+      margin-left: auto;
+  }
+.container-fluid.product-list-main {
+    background-color: #fff;
+    padding-top: 30px;
+    display: inline-block;
+}
+.product-list-main {
+    background-color: #fff;
+    padding-top: 30px;
+    display: inline-block;
+}
+.product-heading{
+    display: inline-block;
+}
+.product-width{
+    width: 100%;
+}
+.product-count{
+    display: inline-block;
+    padding-bottom: 20px;
+}
+.items {
+    text-align: center;
+}
+.product-list-main h1 {
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+    max-width: 400px;
+    color: #303030;
+    padding-left: 10px;
+    margin-top: 3px;
+    margin-bottom: 0;
+    text-transform: capitalize;
+    font-family: playfairdisplay-regular;
+    font-size: 2rem;
+    font-weight: 400;
+}
+.product-list-main p {
+    color: #303030;
+    padding-top: 0;
+    margin: 0;
+    text-transform: capitalize;
+    font-size: 14px;
+    font-family: jost-regular;
+}
+
+/* ***************************  Filter Top Design *************************/
+.filter-top {
+  display: flex;
+  flex-wrap: wrap;
+}
+.product-list-main .sidebar-filter-top {
+  min-width: auto !important;
+  padding-left: 20px;
+  margin-left: 0 !important;
+  padding-right: 20px;
+  flex-grow: 0 !important;
+  width: 18%;
+  flex: 0 0 18%;
+  transition: 0.5s all ease-out;
+  position: sticky;
+  top: 0;
+}
+.sidebar-inner {
+  padding-left: 20px !important;
+  position: sticky;
+  top: 0;
+}
+.sidebar-inner ul {
+    list-style: none;
+    cursor: pointer;
+}
+.product-list-main h3 {
+  font-weight: 500;
+  display: inline-block;
+  text-overflow: ellipsis;
+  vertical-align: top;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 16px;
+  max-width: 400px;
+  color: #000;
+  padding-left: 10px;
+  margin-top: 3px;
+  margin-bottom: 0;
+  text-transform: capitalize;
+}
+.product-list-main p {
+  color: #303030;
+  padding-top: 0;
+  margin: 0;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+.product-list-main p span {
+  color: #303030;
+  padding-right: 3px;
+  font-size: 14px !important;
+}
+.hideFilterWrap {
+  display: flex;
+  border: 1px solid #ccc;
+  padding: 10px 15px !important;
+  cursor: pointer;
+  text-transform: uppercase !important;
+  font-family: jost-medium;
+}
+.hideFilterWrap img {
+  margin-right: 5px;
+}
+.product-list-main .product-filter-section {
+  width: 74%;
+  max-width: 74%;
+  flex: 0 0 76%;
+  padding-left: 15px;
+  padding-right: 12px;
+}
+.row-filter {
+  width: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  padding-bottom: 15px;
+  padding-top: 8px;
+  padding-right: 30px;
+  margin-right: 0;
+  display: flex;
+}
+.applied-filter > ul::-webkit-scrollbar {
+  display: none;
+}
+.applied-filter {
+  width: 70%;
+}
+.applied-filter ul {
+  display: flex;
+  overflow-x: scroll;
+}
+.product-sort {
+  margin-bottom: 0;
+  position: relative;
+  padding-right: 0;
+  margin-right: 0;
+  width: 30%;
+}
+
+.sort-product {
+  float: right;
+  padding: 8px 5px;
+  font-size: 14px;
+  color: #282c3f;
+  cursor: pointer;
+  position: relative;
+  width: 140%;
+  max-width: 250px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  border: 1px solid #d3d3d3;
+}
+.sort-product strong {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.sort-product span {
+  text-transform: capitalize;
+  color: #282c3f;
+  font-family: "Jost-medium";
+  width: 60%;
+}
+.sortby-arrow {
+  background-image: url(../assets/Img/down-arrow.png);
+  background-size: 14px;
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-position-y: center;
+  width: 14px;
+  height: 20px;
+  padding-right: 22px;
+  font-weight: 400;
+  float: right;
+}
+.sort-product ul.sort-list {
+  width: 100%;
+  max-width: 250px;
+  background-color: #fff;
+  position: absolute;
+  top: 32px;
+  left: -1px;
+  margin: 0;
+  padding: 10px 0;
+  z-index: 10;
+  display: none;
+  border: 1px solid #d4d5d9;
+  border-top: none;
+  box-shadow: 0 8px 10px 0 rgb(0 0 0 / 8%);
+}
+.sort-product:hover ul.sort-list {
+  display: block;
+}
+.sort-product ul.sort-list li {
+  display: block;
+  font-size: 15px;
+  color: #282c3f;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+.sort-product ul.sort-list li:hover {
+  background-color: #f5f5f5;
+}
+.liactive {
+  background-color: #f5f5f5;
+}
+.inline-block {
+  display: inline-block;
+}
+.applied-filter li {
+  font-size: 13px;
+  display: inline-block;
+  padding: 8px 24px;
+  border-radius: 18px;
+  margin-right: 5px;
+  border: 1px solid #707070;
+  margin-bottom: 4px;
+}
+.applied-filter li > span {
+  text-transform: capitalize;
+  font-family: Jost-medium;
+}
+li .remove {
+  text-decoration: none;
+  color: #303030;
+  margin-left: 5px;
+  font-weight: lighter;
+}
+.product-main {
+  display: flex;
+}
+
+
+
+/* **********************Sidebar filter Design ***************************/
+.sidebar-filter{
+    width: 25%;
+}
+input[type='checkbox'] {
+    accent-color: #4C0B36;
+}
+.filter-component button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: none;
+    background: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 15px 0 12px 0;
+}
+a.filter-box {
+    font-size: 14px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    padding-left: 5px;
+    border-bottom: 1px solid #e9e9ed;
+}
+.list-unstyled li {
+    font-size: 14px;
+    padding-top: 9px;
+    display: block;
+    padding-bottom: 0;
+    position: relative;
+}
+.list-unstyled li label{
+    padding-left: 25px;
+
+}
+.filter-box li .hide{
+    display: none
+}
+.filter-box li .show{
+    display: block;
+    width: 10%;
+}
+.filter-box>li {
+    font-size: 1rem;
+    font-family: jost-semibold;
+    display: flex;
+    justify-content: space-between;
+}
+.filter-box>li span{
+    font-size: 16px;
+}
+.filter-box li .show img {
+    width: 45%;
+}
+li.women {
+    padding: 3% 0%;
+}
+li.women label{
+    font-family: 'jost-medium';
+    font-size: 14px;
+    font-weight: 200;
+    margin-left: 15px;
+}
+.hidefilter{
+display: none;
+transition: 0.5s all ease-out;
+}
+.active{
+    width: 100%;
+    transition: 0.5s all ease-out;
+}
+.sort-product:hover .new img{
+    transform: rotateX(180deg);
+}
+@media screen and (max-width: 950px) {
+  .product-list-main .product-filter-section {
+        max-width: 74%;
+        flex: 0 0 78%;
+    }
+
+    .applied-filter {
+        width: 61%
+    }
+
+    .product-list-main .product-filter-section {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .product-sort {
+        width: 40%;
+    }
+
+    .row-filter {
+        padding-right: 0px;
+    }
+}
+@media screen and (max-width: 768px) {
+      .sortoverlay {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        opacity: 1;
+        background-color: rgba(0,0,0,.5);
+        top: 0;
+        z-index: 2;
+    }
+    .sort-dropdown {
+        position: fixed;
+        right: 0;
+        width: 100%;
+        max-width: 100%;
+        z-index: 999;
+        background-color: #fff;
+        top: auto;
+        padding: 0;
+        bottom: 45px;
+        text-align: left;
+    }
+    
+    .sort-list{ 
+        display: none;
+    }
+    .product-sort {
+        background: #fff;
+        font-weight: 700;
+        color: #000;
+        line-height: 45px;
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        background-size: 14px!important;
+        background-image: url(../assets/Img/sort.svg)!important;
+        background-repeat: no-repeat!important;
+        background-position: 50%!important;
+        background-position-x: 20%!important;
+        outline: none!important;
+        box-shadow: none!important;
+        border: none;
+        border-top: 1px solid #eaeaec;
+        border-right: 1px solid #eaeaec!important;
+    }
+    button.product-sort {
+        display: block;
+    }
+    .product-sort {
+        width: 50%;
+        float: left;
+        line-height: 45px;
+        max-width: 50%!important;
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        top: auto;
+        position: fixed;
+        bottom: 0;
+        color: #000;
+        -moz-text-align-last: center;
+        text-align-last: center;
+        left: 0;
+        height: 45px!important;
+        border-right: 1px solid rgba(122,119,119,.34118)!important;
+        z-index: 9;
+        border-radius: 0;
+    }
+     .mobile-filter {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        z-index: 99;
+        width: 50%;
+        height: 45px;
+        color: #fff;
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        background-size: 18px!important;
+        background-image: url(../assets/Img/filter-mobile.svg)!important;
+        background-repeat: no-repeat!important;
+        background-position: 50%!important;
+        background-position-x: 22%!important;
+        line-height: 45px;
+        border: none;
+        border-top: 1px solid #eaeaec;
+        color: #000;
+        font-weight: 700;
+        background-color: #fff;
+    }
+    .filter-box .list-unstyled {
+        padding-top: 0;
+        position: absolute;
+        left: 120px;
+        width: calc(100% - 120px);
+        top: 49px;
+        margin: 0;
+        height: 100%;
+        background: #fff;
+        min-height: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .sidebar-filter {
+        /* position: absolute; */
+        min-height: 80% !important;
+        width: 120px;
+        background: #f3f3f3;
+        border-bottom: 1px solid #e4e4e4;
+        z-index: 100;
+        position: fixed !important;
+        top: 0;
+        overflow: auto;
+        left: 0;
+        height: 85%;
+        max-width: 100% !important;
+        width: 100% !important;
+        background-color: #fff;
+        padding: 0 0 46px !important;
+    }
+    .container {
+        max-width: 100%;
+    }
+    .mobileFilterSection {
+        padding: 0;
+        border-bottom: 1px solid #efefef;
+    }
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: 35px;
+    margin-left: 35px;
+    }
+    .col-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .mobileFilterSection p {
+        font-size: 18px;
+        font-family: "Jost-medium";
+        padding: 11px 0;
+    }
+    .text-right {
+        text-align: right!important;
+    }
+    .filter-clear-new {
+        font-size: 13px;
+        font-weight: 400;
+        border: 1px solid #707070;
+        font-family: "Jost-regular";
+        padding: 3px 10px;
+        display: inline-block;
+        margin: 10px 0;
+        border-radius: 50px;
+        line-height: normal;
+    }
+    .sidebar-inner {
+        height: 100% !important;
+        padding-left: 0px!important;
+        overflow-x: scroll;
+    }
+    ul.filter-component {
+        padding-left: 20px!important;
+        height: 6%;
+        width: 150px;
+        background: #f3f3f3;
+        padding: 0;
+        border-bottom: 1px solid #e4e4e4;
+        padding-top: 10px;
+    }   
+    ul.options_wrapper.list-unstyled {
+        position: absolute;
+        left: 185px;
+        top: 10px;
+    } 
+    ul.options_wrapper.list-unstyled li {
+        line-height: 2rem;
+        font-size: 16px;
+        padding-left: 20px;
+    }
+    .hideFilterWrap{
+        display: none;
+    }
+    .applied-filter{
+        display: none;
+    }
+    .show img{
+        display: none;
+    }
+    /* .sidebar-filter {
+        display: none;
+    } */
+    .product-page {
+        width: 100%;
+    }
+    .slide-box {
+        width: 48%;
+    }
+    .apply_mobile_filter {
+        position: fixed;
+        display: block;
+        bottom: 0;
+        right: 0;
+        z-index: 99;
+        width: 50%;
+        height: 45px;
+        border: none;
+        color: #fff;
+        font-size: 15px;
+        border: 0;
+        border-top: 1px solid #eaeaec;
+        color: red;
+        text-transform: uppercase;
+        font-size: 13px;
+        border-right: 0;
+        font-weight: 700;
+        letter-spacing: 1px;
+        background: #fff;
+    }
+    .close_mobile_filter {
+        border: 0;
+        border-top: 1px solid #eaeaec;
+        color: #000;
+        text-transform: uppercase;
+        font-size: 13px;
+        border-right: 1px solid #eaeaec;
+        font-weight: 700;
+        letter-spacing: 1px;
+        position: fixed;
+        display: block;
+        bottom: 0;
+        left: 0;
+        z-index: 99;
+        width: 50%;
+        height: 45px;
+        background-color: #fff;
+        font-size: 15px;
+    }
+    .active-filter {
+        background: #fff !important;
+    }
+    a.filter-box {
+        font-size: 14px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-left:0px;
+        border-bottom: 0px solid #e9e9ed;
+    }
+}
+</style>
