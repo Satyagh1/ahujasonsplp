@@ -10,7 +10,7 @@
     </div>
     <div class="container-fluid inline-block">
       <div class="filter-top">
-        <div class="sidebar-filter">
+        <div class="sidebar-filter-top">
           <div>
             <div>
               <h3>
@@ -26,6 +26,8 @@
               </h3>
             </div>
           </div>
+        </div>
+        <div class="sidebar-filter"  v-show="mobilefiltertog">
         </div>
         <div class="product-filter-section">
           <div class="row-filter">
@@ -55,20 +57,55 @@
                   </li>
                 </ul>
               </div>
+              <div
+                class="sortoverlay"
+                style=""
+                v-show="mobiletoggle"
+                @click="togglemobile()"
+              >
+                <ul class="sort-dropdown">
+                  <li class="heading font-bold">SORT BY</li>
+                  <li
+                    v-for="(sort, i) in response.sort"
+                    :key="i"
+                    :class="[sort.label == label ? 'liactive' : '']"
+                    @click="getsort(sort.code, sort.label)"
+                    :value="sort.label"
+                  >
+                    {{ sort.label }}
+                  </li>
+                </ul>
+              </div>
+              <button class="product-sort for-mobile" @click="togglemobile()">
+                Sort by
+              </button>
+              <button class="mobile-filter for-mobile" @click="filtermobile()">Filter</button>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="product-main">
-      <div :class="[!isOpen ? 'sidebar-filter ' : 'sidebar-filter hidefilter']">
+      <div :class="[!isOpen ? 'sidebar-filter d-none ' : 'sidebar-filter hidefilter d-none ']">
+        <div
+          class="container mobileFilterSection for-mobile"
+        >
+          <div class="row">
+            <div class="col-6">
+              <p>Filter</p>
+            </div>
+            <div class="col-6 text-right pr-4">
+              <a href="#" class="filter-clear-new" @click="clearall()" >Clear</a>
+            </div>
+          </div>
+        </div>
         <div class="sidebar-inner">
           <ul
-            class="filter-component"
+            :class="[showlist == index ? 'filter-component active-filter' : 'filter-component']"
             v-for="(item, index) in response.filters"
             :key="index"
           >
-            <button @click="toggleAccordion(index)" class="filter-box">
+            <a @click="toggleAccordion(index)" class="filter-box">
               <li>
                 {{ item.filter_lable }}
                 <span :class="[showlist == index ? 'show' : 'hide']"
@@ -78,9 +115,9 @@
                   ><img src="../assets/Img/plus.png" alt=""
                 /></span>
               </li>
-            </button>
-            <ul class="options_wrapper" v-if="showlist == index">
-              <li class="women" v-for="(itemf, i) in item.options" :key="i">
+            </a>
+            <ul class="options_wrapper list-unstyled" v-if="showlist == index">
+              <li v-for="(itemf, i) in item.options" :key="i">
                 <input
                   type="checkbox"
                   :name="itemf.value_key"
@@ -96,8 +133,61 @@
           </ul>
         </div>
       </div>
+      <div :class="[!isOpen ? 'sidebar-filter ' : 'sidebar-filter hidefilter']"  v-show="mobilefiltertog">
+        <div
+          class="container mobileFilterSection for-mobile"
+        >
+          <div class="row">
+            <div class="col-6">
+              <p>Filter</p>
+            </div>
+            <div class="col-6 text-right pr-4">
+              <a href="#" class="filter-clear-new" @click="clearall()">Clear</a>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-inner">
+          <ul
+            :class="[showlist == index ? 'filter-component active-filter' : 'filter-component']"
+            v-for="(item, index) in response.filters"
+            :key="index"
+          >
+            <a @click="toggleAccordion(index)" class="filter-box">
+              <li>
+                {{ item.filter_lable }}
+                <span :class="[showlist == index ? 'show' : 'hide']"
+                  ><img src="../assets/Img/minus-sign.png" alt=""
+                /></span>
+                <span :class="[showlist == index ? 'hide' : 'show']"
+                  ><img src="../assets/Img/plus.png" alt=""
+                /></span>
+              </li>
+            </a>
+            <ul class="options_wrapper list-unstyled" v-if="showlist == index">
+              <li v-for="(itemf, i) in item.options" :key="i">
+                <input
+                  type="checkbox"
+                  :name="itemf.value_key"
+                  :id="itemf.value_key"
+                  @click="selectAdd(itemf.code, itemf.value)"
+                  :checked="checkbox_control(itemf.value)"
+                />
+                <label :for="itemf.value_key" :value="itemf.value"
+                  >{{ itemf.value }}
+                </label>
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <button class="apply_mobile_filter for-mobile" @click="filtermobile()">Apply</button>
+        <button class="close_mobile_filter for-mobile" @click="filtermobile()">Close</button>
+      </div>
       <div :class="[isOpen ? 'product-page active' : 'product-page']">
-        <ProductList :Products="Products" :handleScroll="handleScroll" :dataCount="dataCount" />
+        <ProductList
+          :Products="Products"
+          :handleScroll="handleScroll"
+          :dataCount="dataCount"
+        />
       </div>
     </div>
   </div>
@@ -118,7 +208,7 @@ export default {
       result: [],
       flag: false,
       isOpen: false,
-      isvisible:true,
+      isvisible: true,
       showlist: null,
       selected: [],
       checked: false,
@@ -126,19 +216,23 @@ export default {
       srt: "",
       label: "",
       dataCount: false,
+      mobiletoggle: false,
+      mobilefiltertog: false,
     };
   },
   methods: {
     getsort(srt_code, srt_label) {
       this.srt = srt_code;
       this.label = srt_label;
-      this.$router.push({query:{ ...this.$route.query,  sort: this.srt }}).catch(()=>{});
+      this.$router
+        .push({ query: { ...this.$route.query, sort: this.srt } })
+        .catch(() => {});
       console.log(this.srt, "this sort code");
     },
     rmByIndex(index) {
       this.selected.splice(index, 1);
       this.filterPassing = "";
-      this.$router.push({ name: "Home" })
+      this.$router.push({ name: "Home" });
 
       for (let a in this.selected) {
         if (this.selected[this.selected.length - 1] === this.selected[a]) {
@@ -146,7 +240,11 @@ export default {
             "",
             this.selected[a].filter_code
           );
-            this.$router.push({query: { ...this.$route.query, filter: this.filterPassing }}).catch(()=>{});
+          this.$router
+            .push({
+              query: { ...this.$route.query, filter: this.filterPassing },
+            })
+            .catch(() => {});
         } else {
           this.filterPassing = this.filterPassing.concat(
             this.selected[a].filter_code,
@@ -170,7 +268,7 @@ export default {
         obj["filter_code"] = filter_key;
 
         this.selected.push(obj);
-        console.log(this.selected,"first selected ");
+        console.log(this.selected, "first selected ");
       }
       for (let a in this.selected) {
         if (this.selected[this.selected.length - 1] === this.selected[a]) {
@@ -178,11 +276,19 @@ export default {
             "",
             this.selected[a].filter_code
           );
-            // this.$router.push({query: this.$route.query, filter: this.filterPassing })
-            this.$router.push({query: { ...this.$route.query, filter: this.filterPassing }}).catch(()=>{});
-          console.log(this.$route.query.filter,"this is router");
-          this.filterPassing=this.$route.query.filter
-        } else { this.filterPassing = this.filterPassing.concat( this.selected[a].filter_code, "," );
+          // this.$router.push({query: this.$route.query, filter: this.filterPassing })
+          this.$router
+            .push({
+              query: { ...this.$route.query, filter: this.filterPassing },
+            })
+            .catch(() => {});
+          console.log(this.$route.query.filter, "this is router");
+          this.filterPassing = this.$route.query.filter;
+        } else {
+          this.filterPassing = this.filterPassing.concat(
+            this.selected[a].filter_code,
+            ","
+          );
         }
       }
     },
@@ -204,34 +310,32 @@ export default {
     },
     async getData() {
       console.log("Adding Data in infinite scroll");
-     fetch(
+      fetch(
         `https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=${this.page}&count=${this.limit}&sort_by=${this.srt}&sort_dir=desc&filter=${this.filterPassing}`
       )
         .then((res) => res.json())
         .then((data) => {
           const list = data.result;
-          this.result = list;  
-          if (this.result.count <=  this.limit) {
+          this.result = list;
+          if (this.result.count >= this.limit) {
             console.log("main chla ");
-            this.dataCount=true;
-          }       
+            this.dataCount = true;
+          }
           if (this.flag == true) {
             this.response = list;
             this.flag = false;
           }
-            this.Products = [...this.Products, ...list.products];
+          this.Products = [...this.Products, ...list.products];
         })
-.catch((error) => {
-  console.log(error);
-})
+        .catch((error) => {
+          console.log(error);
+        });
     },
     handleScroll(isVisible) {
-      if (this.dataCount  && this.isvisible==isVisible){
+      if (this.dataCount && this.isvisible == isVisible) {
         this.page++;
         this.getData();
-      }
-      else
-      return;
+      } else return;
       // // this.isvisible = isVisible;
       // if (this.isvisible==isVisible) {
       //   this.page++;
@@ -247,11 +351,29 @@ export default {
           : false;
       return a;
     },
+    togglemobile() {
+      console.log("called");
+      if (this.mobiletoggle == false) {
+        this.mobiletoggle = true;
+      } else {
+        this.mobiletoggle = false;
+      }
+    },
+    filtermobile(){
+      if (this.mobilefiltertog == false) {
+        this.mobilefiltertog = true;
+      } else {
+        this.mobilefiltertog = false;
+      }
+    },
+    clearall(){
+      this.rmByIndex()
+      }
   },
   watch: {
     selected: {
       handler() {
-        this.page==1
+        this.page == 1;
         this.Products = [];
         this.getData();
       },
@@ -268,29 +390,28 @@ export default {
     },
   },
   mounted() {
-    console.log('Mounted from Product Page')
+    console.log("Mounted from Product Page");
     this.flag = true;
     this.label = "newest";
     console.log(this.$route.query);
-    if(this.$route.query.filter !=  undefined){
+    if (this.$route.query.filter != undefined) {
       console.log("this is $route", this.$route.query);
       let a = this.$route.query.filter.split(",");
-      console.log(a,"aaaaaa");
-      a.forEach((el)=>{
-        let val = el.split('-')
-        console.log("aya", val)
-        val[1] = val[1].split("%2B").join(" "); 
+      console.log(a, "aaaaaa");
+      a.forEach((el) => {
+        let val = el.split("-");
+        console.log("aya", val);
+        val[1] = val[1].split("%2B").join(" ");
         val[1] = val[1].split("%26").join("&");
-          this.selectAdd(val[0], val[1])
-      })
-      }else if(this.$route.query.sort!=undefined){
-         let b = this.$route.query.sort
-      console.log(b,"thiss is sort during mounted");
-      this.getsort(b, b)
-      }
-      else{
-        this.getData();
-      }
+        this.selectAdd(val[0], val[1]);
+      });
+    } else if (this.$route.query.sort != undefined) {
+      let b = this.$route.query.sort;
+      console.log(b, "thiss is sort during mounted");
+      this.getsort(b, b);
+    } else {
+      this.getData();
+    }
   },
 };
 </script>

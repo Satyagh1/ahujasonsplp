@@ -26,6 +26,10 @@ body{
 ul {
     list-style: none;
 }
+a {
+    text-decoration: none;
+    background-color: transparent;
+}
 /* ****************** Top Bar Design ************************/
 .top-nav{
     display: flex;
@@ -70,9 +74,8 @@ margin-bottom: -3px;
 }
 /**************************** Header Navbar Design******************************* */
 .navbar-sticky{
-    z-index: 10;
-    position: sticky;
-    top: 0;
+    /* z-index: 10; */
+    position:relative;
 }
 .header{
     /* position: sticky !important;
@@ -243,9 +246,9 @@ margin-bottom: -3px;
     flex-wrap: wrap;
     
 }
-.product-list-main .sidebar-filter {
+.product-list-main .sidebar-filter-top {
     min-width: auto!important;
-    padding-left: 20px!important;
+    padding-left: 20px;
     margin-left: 0!important;
     padding-right: 20px;
     flex-grow: 0!important;
@@ -254,6 +257,9 @@ margin-bottom: -3px;
 transition: 0.5s all ease-out;
 position: sticky;
     top: 0;
+}
+.sidebar-inner {
+    padding-left: 20px!important;
 }
 .product-list-main h3 {
     font-weight: 500;
@@ -515,14 +521,23 @@ input[type='checkbox'] {
     font-size: 14px;
     padding: 15px 0 12px 0;
 }
-li.filter-box {
+a.filter-box {
     font-size: 14px;
-}
-li.filter-box {
     padding-top: 20px;
     padding-bottom: 15px;
     padding-left: 5px;
     border-bottom: 1px solid #e9e9ed;
+}
+.list-unstyled li {
+    font-size: 14px;
+    padding-top: 9px;
+    display: block;
+    padding-bottom: 0;
+    position: relative;
+}
+.list-unstyled li label{
+    padding-left: 25px;
+
 }
 .filter-box li .hide{
     display: none
