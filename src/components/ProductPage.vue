@@ -95,7 +95,6 @@
               <p>Filter</p>
             </div>
             <div class="col-6 text-right pr-4">
-              <a href="#" class="filter-clear-new" @click="clearall()" >Clear</a>
             </div>
           </div>
         </div>
@@ -142,7 +141,7 @@
               <p>Filter</p>
             </div>
             <div class="col-6 text-right pr-4">
-              <a href="#" class="filter-clear-new" @click="clearall()">Clear</a>
+              <a href="#" class="filter-clear-new" @click="clearall()">Clear All</a>
             </div>
           </div>
         </div>
@@ -367,7 +366,9 @@ export default {
       }
     },
     clearall(){
-      this.rmByIndex()
+      this.selected=[];
+      this.filterPassing = "";
+      this.$router.push({ name: "Home" });
       }
   },
   watch: {

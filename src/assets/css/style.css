@@ -260,6 +260,8 @@ position: sticky;
 }
 .sidebar-inner {
     padding-left: 20px!important;
+    position: sticky;
+    top: 0;
 }
 .product-list-main h3 {
     font-weight: 500;

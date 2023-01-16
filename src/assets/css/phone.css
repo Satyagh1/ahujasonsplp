@@ -383,7 +383,7 @@
     ul.options_wrapper.list-unstyled {
         position: absolute;
         left: 185px;
-        top: 52px;
+        top: 10px;
     } 
     ul.options_wrapper.list-unstyled li {
         line-height: 2rem;
