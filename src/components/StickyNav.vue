@@ -2,7 +2,7 @@
   <nav class="navbar-sticky">
     <div class="header">
       <div class="toggle for-mobile" @click="toggle()">
-        <img src="../assets/Img/toggle.svg" alt="" />
+        <img src="../assets/Img/toggle.svg" alt="" >
       </div>
       <div
         :class="[checktoggle ? 'navbar active-menu' : 'navbar']"
@@ -10,33 +10,33 @@
       >
         <div class="navbar-nav" @click="toggle()">
           <div class="for-mobile close-btn" @click="toggle()">
-            <img src="../assets/Img/cancel.png" alt="" />
+            <img src="../assets/Img/cancel.png" alt="" >
           </div>
           <ul>
             <li class="nav-item">
               <a href="#"
                 ><span>WOMEN</span>
                 <img src="../assets/Img/down-arrow.png" alt=""
-              /></a>
+              ></a>
             </li>
             <li class="nav-item">
               <a href="#"
                 ><span> MEN</span>
                 <img src="../assets/Img/down-arrow.png" alt=""
-              /></a>
+              ></a>
             </li>
             <li class="nav-item"><a href="#">SALE</a></li>
             <li class="nav-item">
               <a href="#"
                 ><span> COLLECTION</span>
                 <img src="../assets/Img/down-arrow.png" alt=""
-              /></a>
+              ></a>
             </li>
             <li class="nav-item for-mobile">
               <a href="#"
                 ><span>OUR STORY</span>
                 <img src="../assets/Img/down-arrow.png" alt=""
-              /></a>
+              ></a>
             </li>
             <li class="nav-item for-mobile"><a href="#">CRAFTSMANSHIP</a></li>
           </ul>
@@ -44,10 +44,10 @@
       </div>
       <a href="#" class="logo d-none"
         ><img src="../assets/Img/logo.svg" alt=""
-      /></a>
+      ></a>
       <a href="#" class="mobile-logo"
         ><img src="../assets/Img/smallLogo.png" alt=""
-      /></a>
+      ></a>
       <div class="left">
         <div class="left-inner">
           <ul>
@@ -55,21 +55,23 @@
               <a href="#"
                 ><span>OUR STORY</span>
                 <img src="../assets/Img/down-arrow.png" alt=""
-              /></a>
+              ></a>
             </li>
             <li><a href="#">CRAFTSMANSHIP</a></li>
           </ul>
         </div>
         <div class="logins">
           <ul>
-            <li>
-              <a href=""><img src="../assets/Img/search.svg" alt="" /></a>
+            <li  class="search-container">
+             <input type="text" placeholder="Search">
             </li>
             <li>
-              <a href=""><img src="../assets/Img/Heart.svg" alt="" /></a>
+              <a href=""><img src="../assets/Img/Heart.svg" alt="" ></a>
             </li>
             <li>
-              <a href=""><img src="../assets/Img/shopping-bag.svg" alt="" /></a>
+              <a href=""><img src="../assets/Img/shopping-bag.svg" alt="" >
+              <span class="counter-number">0</span>
+              </a>
             </li>
           </ul>
         </div>
@@ -194,8 +196,66 @@ export default {
 .left .logins ul li a {
   text-decoration: none;
 }
+.search-container input[type=text] {
+    font-size: 20px;
+    background-image: url(../assets/Img/search.svg);
+    height: 22px!important;
+    width: 22px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 20px;
+    border: 0;
+    font-size: 0;
+    background-color: transparent;
+    cursor: pointer;
+    margin-top: 7px!important;
+}
+.search-container ::placeholder{
+  color: transparent;
+  }
+.search-container input[type=text]:focus::placeholder{
+  color: #495057 !important;
+}
+.search-container input:focus {
+  outline: none;
+    box-shadow: none;
+    transition: width .5s;
+    width: 200px;
+    border: 1px solid #3a3a3a;
+    background: #fff;
+    width: 421px;
+    box-sizing: border-box;
+    font-size: 15px;
+    min-height: 36px;
+    color: #a2a2a2;
+    border-radius: 5px;
+    margin-top: 0!important;
+    background-image: url(../assets/Img/search.svg)!important;
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
+    background-size: 17px;
+    padding: 9px 10px 9px 38px;
+    position: absolute;
+    right: 10%;
+    top: 38%;
+}
 .left .logins ul li a img {
   width: 22px;
+}
+span.counter-number {
+  position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #000;
+    color: #fff;
+    padding: 1px;
+    border-radius: 15px;
+    top:50%;
+    font-family: "Jost-medium";
+    right: 10px;
+    text-align: center;
+    font-size: 11px;
+    line-height: 11px;
 }
 @media screen and (max-width: 950px) {
   .navbar-nav ul li a {
@@ -204,6 +264,9 @@ export default {
   .left .left-inner ul li a {
     font-size: 13px;
   }
+    /* span.counter-number {
+      top: 45px;
+    } */
   .navbar {
     width: 40%;
   }
@@ -213,6 +276,11 @@ export default {
   .left {
     display: flex;
   }
+    .search-container input:focus {
+      width: 250px;
+             right: 12%;
+    top: 25%;
+    }
   .left .left-inner {
     width: 60%;
   }
@@ -222,14 +290,17 @@ export default {
 }
 @media screen and (max-width: 768px) {
   .header {
-        padding: 5px 15px;
+    padding: 5px 15px;
         display: inline-block;
         width: 94%;
     }
 
     .header-nav {
-        position: fixed;
+      position: fixed;
         top: 0;
+    }
+    span.counter-number {
+          right:7%;
     }
 
 
@@ -243,7 +314,7 @@ export default {
     }
 
     .mobile-logo img {
-        width: 70px !important;
+      width: 70px !important;
         height: auto;
         top: 4px !important;
         padding: 8px 17px;
@@ -251,23 +322,28 @@ export default {
     }
 
     .left {
-        float: right;
+      float: right;
         display: block;
     }
 
     .left .left-inner {
-        display: none;
+      display: none;
     }
 
     .left .logins {
-        float: right;
+      float: right;
         margin: 5px 0;
         width: 90%;
     }
 
     .left .logins ul {
-        margin-top: 16px;
+      margin-top: 16px;
     }
+      .search-container input:focus {
+        width: 365px;
+            right: 28%;
+    top: 28%;
+      }
 
     .navbar {
         width: 100%;
