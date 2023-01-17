@@ -126,8 +126,7 @@ export default {
 .first-footer {
   display: flex;
   align-items: flex-start;
-  padding: 2% 5%;
-  width: 80%;
+  width: 85%;
 }
 .footer-divider-logo-wrapper {
   position: relative;
@@ -181,13 +180,14 @@ export default {
 }
 
 .footer-col-last {
-  width: 40%;
+  width: 35%;
   display: inline-block;
 }
 
 .footer-col-last p {
   font-size: 14px;
   width: 85%;
+  line-height: 20px;
 }
 
 .footer-input {
@@ -227,6 +227,7 @@ export default {
 
 .footer-social-media_container h3 {
   font-size: 14px;
+      letter-spacing: 2.8px;
 }
 
 .social-media {
@@ -250,7 +251,7 @@ export default {
   width: 100%;
 }
 .social-media a img {
-  width: 85%;
+      width: 22px;
 }
 @media screen and (max-width: 768px) {
   .footer {

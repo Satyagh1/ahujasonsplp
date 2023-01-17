@@ -98,7 +98,10 @@ export default {
 </script>
 <style>
 .navbar-sticky {
-  position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%)
 }
 .header {
   width: 100%;

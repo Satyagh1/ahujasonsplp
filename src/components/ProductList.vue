@@ -1,10 +1,11 @@
 <template>
           <div class="product-container">
           <div
-            class="slide-box"
+            class="new-class"
             v-for="(item, index) in Productsitem"
             :key="index"
           >
+          <div class="slide-box">
             <div class="product-box">
               <a href="/">
                 <div class="image-single">
@@ -24,32 +25,36 @@
               </div>
             </div>
           </div>
-         <div class="loader"  v-observe-visibility="handleScroll"><img src="../assets/Img/giphy.gif" alt=""></div>
+        </div>
+         <div class="loader" v-show="dataCountFlag" v-observe-visibility="handleScroll"><img src="../assets/Img/giphy.gif" alt=""></div>
         </div>
 </template>
 <script>
 export default {
   name: "Product-List",
-props:['Productsitem','handleScroll','dataCount'],
+props:['Productsitem','handleScroll','dataCountFlag',"isLoader"],
 };
 </script>
 <style>
 /* *********************** Product List Design *******************************/
 
 .product-container{
-    padding-left: 15px;
-    padding-right: 15px;
-    display: flex;
+       display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    row-gap: 18px;
+    row-gap: 50px;
     align-items: center;
+    margin-left: -15px;
+    margin-right: -15px;
 }
-.slide-box {
-    width: 22%;
+.new-class {
+    width: 25%;
+}
+.slide-box{
+      padding-left: 15px;
+    padding-right: 15px;
 }
  .product-box {
-    position: relative;
+   position: relative;
     overflow: hidden;
 }
 .image-single img {
@@ -85,22 +90,29 @@ a.wishlist {
     margin: 5% 0%;
 }
 span.price {
-    font-size: 17px!important;
+  font-size: 17px!important;
     color: #4C0B36!important;
     font-family: Jost-medium;
 }
 .loader{
-    width: 100%;
+  width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 @media screen and (max-width: 950px) {
-  .slide-box {
-        width: 32%;
-    }
+  .new-class {
+      width: 33.33%;
+  }
 }
 @media screen and (max-width: 768px) {
-  
+  .new-class {
+      width: 50%;
+  }
+  .slide-box{
+        padding-left: 15px;
+      padding-right: 15px;
+  }
+
 }
 </style>
