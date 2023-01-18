@@ -42,7 +42,9 @@
               <div class="sort-product">
                 <strong
                   >Sort by : &nbsp;
-                  <span class="sortby-arrow"><p>{{ label }}</p></span>
+                  <span class="sortby-arrow"
+                    ><p>{{ label }}</p></span
+                  >
                 </strong>
                 <ul class="sort-list">
                   <li
@@ -67,7 +69,11 @@
                   <li
                     v-for="(sort, i) in response.sort"
                     :key="i"
-                    :class="[sort.label == label ? 'limobilesort liactive' : 'limobilesort']"
+                    :class="[
+                      sort.label == label
+                        ? 'limobilesort liactive'
+                        : 'limobilesort',
+                    ]"
                     @click="getsort(sort.code, sort.label)"
                     :value="sort.label"
                   >
@@ -507,6 +513,11 @@ export default {
   position: sticky;
   top: 0;
   padding-right: 20px;
+  height: 100vh;
+  overflow-x: scroll;
+}
+.sidebar-inner::-webkit-scrollbar {
+    width: 0px;
 }
 .sidebar-inner ul {
   list-style: none;
@@ -619,8 +630,8 @@ export default {
   font-weight: 400;
   float: right;
 }
-.sortby-arrow>p {
-    padding-top: 4px;
+.sortby-arrow > p {
+  padding-top: 4px;
 }
 .sort-product ul.sort-list {
   width: 100%;
@@ -653,9 +664,9 @@ export default {
 .liactive {
   background-color: #f5f5f5;
 }
-.limobilesort{
-    border-bottom: 1px solid #f1f1f1;
-    padding: 10px 15px;
+.limobilesort {
+  border-bottom: 1px solid #f1f1f1;
+  padding: 10px 15px;
 }
 .inline-block {
   display: inline-block;
@@ -674,8 +685,8 @@ export default {
   font-family: Jost-medium;
 }
 ul.filter-component {
-    border-bottom: 1px solid #e9e9ed;
-    padding-bottom: 19px;
+  border-bottom: 1px solid #e9e9ed;
+  padding-bottom: 19px;
 }
 li .remove {
   text-decoration: none;
@@ -767,9 +778,9 @@ li.women label {
   .applied-filter {
     width: 60%;
   }
-.product-container {
+  .product-container {
     column-gap: 0px;
-}
+  }
   .product-sort {
     width: 40%;
   }
@@ -885,7 +896,7 @@ li.women label {
   }
   .sidebar-filter {
     /* position: absolute; */
-    min-height: 80% !important;
+    min-height: 100% !important;
     width: 120px;
     background: #f3f3f3;
     border-bottom: 1px solid #e4e4e4;
@@ -894,11 +905,9 @@ li.women label {
     top: 0;
     overflow: auto;
     left: 0;
-    height: 85%;
-    max-width: 100% !important;
     width: 100% !important;
     background-color: #fff;
-    padding: 0 0 46px !important;
+    padding: 0px 0px 46px !important;
   }
   .container {
     max-width: 100%;
@@ -937,7 +946,7 @@ li.women label {
     line-height: normal;
   }
   .sidebar-inner {
-    height: 100% !important;
+    height: 100vh !important;
     padding-left: 0px !important;
     overflow-x: scroll;
   }

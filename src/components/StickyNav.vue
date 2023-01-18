@@ -218,6 +218,7 @@ export default {
 }
 .search-container input:focus {
   outline: none;
+  cursor: text;
     box-shadow: none;
     transition: width .5s;
     width: 200px;
@@ -277,7 +278,7 @@ span.counter-number {
     display: flex;
   }
     .search-container input:focus {
-      width: 250px;
+      width: 225px;
              right: 12%;
     top: 25%;
     }
@@ -340,7 +341,7 @@ span.counter-number {
       margin-top: 16px;
     }
       .search-container input:focus {
-        width: 365px;
+        width: 180px;
             right: 28%;
     top: 28%;
       }
